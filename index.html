@@ -1,40 +1,53 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bild Aktualisierung</title>
-  <style>
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-  </style>
-</head>
-<body>
-  <h1>Flugwetterdaten</h1>
-  <img id="weatherImage" src="https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php" alt="Wetterbild">
-  <div id="updateTime">Letzte Aktualisierung: Noch nicht aktualisiert</div>
-  <div id="currentTime">Aktuelle Uhrzeit: Noch nicht aktualisiert</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bild Aktualisierung</title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</h3>
+    <img
+      id="weatherImage"
+      src="https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php"
+      alt="Wetterbild"
+    />
+    <p id="updateTime">Letzte Aktualisierung: Noch nicht aktualisiert</p>
+    <p id="currentTime">Aktuelle Uhrzeit: Noch nicht aktualisiert</p>
+    
+    <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank">Wettervorhersage für Flughafen Karlsruhe/Baden-Baden auf Windfinder</a>
 
-  <script>
-    function updateImage() {
-      const img = document.getElementById('weatherImage');
-      img.src = 'https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?' + new Date().getTime();
+    <script>
+      function updateImage() {
+        const img = document.getElementById("weatherImage");
+        img.src =
+          "https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?" +
+          new Date().getTime();
 
-      const updateTime = document.getElementById('updateTime');
-      const now = new Date();
-      updateTime.textContent = 'Letzte Aktualisierung: ' + now.toLocaleString();
-    }
+        const updateTime = document.getElementById("updateTime");
+        const now = new Date();
+        updateTime.textContent =
+          "Letzte Aktualisierung: " + now.toLocaleString();
+      }
 
-    function updateCurrentTime() {
-      const currentTime = document.getElementById('currentTime');
-      const now = new Date();
-      currentTime.textContent = 'Aktuelle Uhrzeit: ' + now.toLocaleTimeString();
-    }
+      function updateCurrentTime() {
+        const currentTime = document.getElementById("currentTime");
+        const now = new Date();
+        currentTime.textContent =
+          "Aktuelle Uhrzeit: " + now.toLocaleTimeString();
+      }
 
-    setInterval(updateImage, 10000);
-    setInterval(updateCurrentTime, 1000);
-  </script>
-</body>
+      setInterval(updateImage, 10000);
+      setInterval(updateCurrentTime, 1000);
+    </script>
+  </body>
 </html>
