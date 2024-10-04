@@ -5,28 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</title>
     <style>
+      html,
+      body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
       body {
         font-family: "Roboto", sans-serif;
+        line-height: 1.6;
       }
       img {
         max-width: 100%;
         height: auto;
       }
+      h3 {
+        font-size: 1.5em;
+        margin: 0.5em 0;
+      }
+      p {
+        margin: 0.5em 0;
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      .content {
+        flex: 1;
+      }
+      .small-text {
+        font-size: 0.8em;
+      }
+      footer {
+        font-size: 0.8em;
+      }
+      button {
+        margin: 1em 0;
+        padding: 0.5em 1em;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      @media (max-width: 600px) {
+        h3 {
+          font-size: 1.2em;
+        }
+        p,
+        a {
+          font-size: 0.9em;
+        }
+        footer {
+          font-size: 0.8em;
+          text-align: center;
+        }
+      }
     </style>
   </head>
   <body>
-    <h3>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</h3>
-    <img
-      id="weatherImage"
-      src="https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php"
-      alt="Wetterbild"
-    />
-    <p id="updateTime">Letzte Aktualisierung: Noch nicht aktualisiert</p>
-    <p id="currentTime">Aktuelle Uhrzeit: Noch nicht aktualisiert</p>
-    
-    <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank">Wettervorhersage für Flughafen Karlsruhe/Baden-Baden auf Windfinder</a>
+    <div class="content">
+      <h3>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</h3>
+      <img
+        id="weatherImage"
+        src=""
+        alt="Wetterbild"
+      />
+      <p id="updateTime">Letzte Aktualisierung: Noch nicht aktualisiert</p>
+      <p id="nextUpdateTime">Nächste Aktualisierung: Noch nicht geplant</p>
+      <p id="currentTime">Aktuelle Uhrzeit: Noch nicht aktualisiert</p>
+      <button onclick="updateImage()">Wetterbild neu laden</button>
+      </br>
+      <a
+        href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden"
+        target="_blank"
+        >Wettervorhersage für Flughafen Karlsruhe/Baden-Baden auf Windfinder</a
+      >
+    </div>
+    <footer>
+      <a href="https://github.com/firsttris/Flugwetterdaten" target="_blank"
+        >Quellcode auf GitHub</a
+      >
+    </footer>
 
     <script>
+      const refreshInterval = 60000;
       function updateImage() {
         const img = document.getElementById("weatherImage");
         img.src =
@@ -37,6 +97,11 @@
         const now = new Date();
         updateTime.textContent =
           "Letzte Aktualisierung: " + now.toLocaleString();
+
+        const nextUpdateTime = document.getElementById("nextUpdateTime");
+        const nextUpdate = new Date(now.getTime() + refreshInterval);
+        nextUpdateTime.textContent =
+          "Nächste Aktualisierung: " + nextUpdate.toLocaleString();
       }
 
       function updateCurrentTime() {
@@ -48,7 +113,7 @@
 
       updateImage();
       updateCurrentTime();
-      setInterval(updateImage, 10000);
+      setInterval(updateImage, refreshInterval);
       setInterval(updateCurrentTime, 1000);
     </script>
   </body>
