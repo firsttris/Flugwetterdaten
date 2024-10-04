@@ -1,1 +1,1 @@
-A simple webpage which continously fetches flugwetterdaten from Baden-Airpark
+Dieses Projekt zeigt aktuelle Flugwetterdaten für den Flughafen Karlsruhe/Baden-Baden an.
