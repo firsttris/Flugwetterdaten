@@ -46,6 +46,8 @@
           "Aktuelle Uhrzeit: " + now.toLocaleTimeString();
       }
 
+      updateImage();
+      updateCurrentTime();
       setInterval(updateImage, 10000);
       setInterval(updateCurrentTime, 1000);
     </script>
