@@ -1,1 +1,1 @@
-A simple webpage which continously refresh Flugwetterdaten from Baden-Airpark
+A simple webpage which continously fetches flugwetterdaten from Baden-Airpark
