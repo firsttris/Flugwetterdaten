@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bild Aktualisierung</title>
+  <style>
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flugwetterdaten</h1>
+  <img id="weatherImage" src="https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php" alt="Wetterbild">
+  <div id="updateTime">Letzte Aktualisierung: Noch nicht aktualisiert</div>
+  <div id="currentTime">Aktuelle Uhrzeit: Noch nicht aktualisiert</div>
+
+  <script>
+    function updateImage() {
+      const img = document.getElementById('weatherImage');
+      img.src = 'https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?' + new Date().getTime();
+
+      const updateTime = document.getElementById('updateTime');
+      const now = new Date();
+      updateTime.textContent = 'Letzte Aktualisierung: ' + now.toLocaleString();
+    }
+
+    function updateCurrentTime() {
+      const currentTime = document.getElementById('currentTime');
+      const now = new Date();
+      currentTime.textContent = 'Aktuelle Uhrzeit: ' + now.toLocaleTimeString();
+    }
+
+    setInterval(updateImage, 10000);
+    setInterval(updateCurrentTime, 1000);
+  </script>
+</body>
+</html>
