@@ -78,16 +78,28 @@
 <body>
   <div class="content">
     <h3>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</h3>
-    <p id="qualityTemperature">Aktuelle Wassertemperatur: Noch nicht geladen</p>
-    <p id="waterLevel">Aktueller Wasserstand: Noch nicht geladen</p>
+    <b>Aktuelle Wassertemperatur</b>
+    <p id="qualityTemperature">Noch nicht geladen</p>
+    <b>Aktueller Wasserstand an der Schleuse</b>
+    <p id="waterLevel">Noch nicht geladen</p>
     <img id="weatherImage" src="" alt="Wetterbild" />
-    <p id="updateTime">Letzte Aktualisierung: Noch nicht aktualisiert</p>
-    <p id="nextUpdateTime">Nächste Aktualisierung: Noch nicht geplant</p>
-    <p id="currentTime">Aktuelle Uhrzeit: Noch nicht aktualisiert</p>
+    </br>
+    <b>Letzte Aktualisierung</b>
+    <span id="updateTime">Noch nicht aktualisiert</span>
+    </br>
+    <b>Nächste Aktualisierung</b>
+    <span id="nextUpdateTime">Noch nicht geplant</span>
+    </br>
+    <b>Aktuelle Uhrzeit</b>
+    <span id="currentTime">Noch nicht aktualisiert</span>
+    </br>
     <button onclick="updateImage()">Wetterbild neu laden</button>
     </br>
-    <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank">Wettervorhersage
-      für Flughafen Karlsruhe/Baden-Baden auf Windfinder</a>
+    <b>Nützliche Links</b>
+    </br>
+    <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank">Windfinder
+      3-Tage Superforecast
+      für Flughafen Karlsruhe/Baden-Baden</a>
     </br>
     <a href="https://www-meteociel-com.translate.goog/previsions/24854/lauterbourg.htm?_x_tr_sl=fr&_x_tr_tl=de&_x_tr_hl=de&_x_tr_pto=wapp"
       target="_blank">Meteociel 3-Tages-Wettervorhersage für Lauterbourg (67630)</a>
@@ -110,20 +122,17 @@
 
       const updateTime = document.getElementById("updateTime");
       const now = new Date();
-      updateTime.textContent =
-        "Letzte Aktualisierung: " + now.toLocaleString();
+      updateTime.textContent = now.toLocaleString();
 
       const nextUpdateTime = document.getElementById("nextUpdateTime");
       const nextUpdate = new Date(now.getTime() + refreshInterval);
-      nextUpdateTime.textContent =
-        "Nächste Aktualisierung: " + nextUpdate.toLocaleString();
+      nextUpdateTime.textContent = nextUpdate.toLocaleString();
     }
 
     function updateCurrentTime() {
       const currentTime = document.getElementById("currentTime");
       const now = new Date();
-      currentTime.textContent =
-        "Aktuelle Uhrzeit: " + now.toLocaleTimeString();
+      currentTime.textContent = now.toLocaleTimeString();
     }
 
     function fetchQualityTemperature() {
@@ -136,7 +145,7 @@
         })
         .then(data => {
           const qualityElement = document.getElementById("qualityTemperature");
-          qualityElement.textContent = "Aktuelle Wassertemperatur: " + data.tempchart.chartSubtitle.text;
+          qualityElement.textContent = data.tempchart.chartSubtitle.text;
         })
         .catch(error => console.error("Fehler beim Laden der Daten:", error));
     }
@@ -150,11 +159,8 @@
           return response.json();
         })
         .then(data => {
-
-          console.log(data.infopanel.data.station.measurement.waterLevel);
-          // Passe hier die Datenverarbeitung an die tatsächliche API-Antwort an.
           const waterElement = document.getElementById("waterLevel");
-          waterElement.textContent = "Aktueller Wasserstand: Heute " + data.infopanel.data.station.measurement.waterLevel.wakt + "cm, Gestern " + data.infopanel.data.station.measurement.waterLevel.dailyAverageDayBefore.avgw + "cm";
+          waterElement.textContent = "Heute " + data.infopanel.data.station.measurement.waterLevel.wakt + " cm, Gestern " + data.infopanel.data.station.measurement.waterLevel.dailyAverageDayBefore.avgw + " cm";
         })
         .catch(error => console.error("Fehler beim Laden der Wasserstandsdaten:", error));
     }
