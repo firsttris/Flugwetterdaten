@@ -1,1 +1,1 @@
-Dieses Projekt zeigt aktuelle Flugwetterdaten für den Flughafen Karlsruhe/Baden-Baden an.
+Wetterinformationen zum Surfen an der Staustufe am Flughafen Baden-Airpark mit Vanilla JavaScript ohne jegliche Abhängigkeiten
