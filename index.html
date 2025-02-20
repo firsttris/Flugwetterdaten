@@ -77,11 +77,13 @@
 
 <body>
   <div class="content">
-    <h3>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</h3>
+    <h3>Wetterinformationen NATO Rampe Rheinmünster</h3>
     <b>Aktuelle Wassertemperatur</b>
     <p id="qualityTemperature">Noch nicht geladen</p>
     <b>Aktueller Wasserstand relativ zum Pegelnullpunkt (110.06NHN+m)</b>
     <p id="waterLevel">Noch nicht geladen</p>
+    <b>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</b>
+    </br>
     <img id="weatherImage" src="" alt="Wetterbild" />
     </br>
     <b>Letzte Aktualisierung</b>
@@ -95,6 +97,19 @@
     </br>
     <button onclick="updateImage()">Wetterbild neu laden</button>
     </br>
+    <b>Erklärung der Felder</b> <span>(von links nach rechts)</span>
+    <ol>
+      <li>Kennbuchstabe der aktuell verbreiteten Wettermeldung</li>
+      <li>QNH in hPa (Luftdruck umgerechnet auf die Meereshöhe) Anm.: nicht identisch mit dem Umgebungsluftdruck</li>
+      <li>Übergangsflugfläche (ab dieser Höhe stellt der Pilot den Höhenmesser auf QNH um)</li>
+      <li>Temperatur (T) und Taupunkt (DP)</li>
+      <li>Wolkenuntergrenze (CB), also Bewölkung mehr als 4/8 in 100 Fuß und Sichtweite (VIS) in Meter</li>
+      <li>Flugwetterbedingungen</li>
+      <li>Datum, Sonnenaufgang/Sonnenuntergang (Zeiten in UTC)</li>
+      <li>Aktuelle Uhrzeit in UTC (UTC + 2h = Sommerzeit, UTC + 1h = Winterzeit)</li>
+      <li>Im großen Bild graphische Darstellung der aktuellen Betriebspiste</li>
+      <li>Feld in der Betriebspiste: Entsprechender Wind, Fett: Windrichtung in Grad, aus der der Wind kommt, Durchschnittliche Windgeschwindigkeit in Knoten. Der kleinere obere Wert zeigt Maximum- und Minimum-Windgeschwindigkeit, T = Rückenwind (tailwind), X = Seitenwind (crosswind)) </li>
+    </ol>
     <b>Nützliche Links</b>
     </br>
     <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank">Windfinder
@@ -110,7 +125,8 @@
     <a href="https://www.elwis.de/DE/dynamisch/Wasserstaende/Pegeleinzeln%3AIFFEZHEIM" target="_blank">ELWIS -
       Wasserstände & Vorhersagen an schifffahrtsrelevanten Pegeln - Iffezheim</a>
     </br>
-    <a href="https://www.hvz.baden-wuerttemberg.de/pegel.html?id=09137" target="_blank">Hochwasservorhersagezentrale Baden-Württemberg - Pegelstand Iffezheim</a>
+    <a href="https://www.hvz.baden-wuerttemberg.de/pegel.html?id=09137" target="_blank">Hochwasservorhersagezentrale
+      Baden-Württemberg - Pegelstand Iffezheim</a>
 
   </div>
   <footer>
@@ -150,7 +166,7 @@
         })
         .then(data => {
           const qualityElement = document.getElementById("qualityTemperature");
-          qualityElement.textContent = data.tempchart.chartSubtitle.text;
+          qualityElement.textContent = data.tempchart.chartSubtitle.text + "Uhr.";
         })
         .catch(error => console.error("Fehler beim Laden der Daten:", error));
     }
@@ -165,7 +181,18 @@
         })
         .then(data => {
           const waterElement = document.getElementById("waterLevel");
-          waterElement.textContent = "Heute " + data.infopanel.data.station.measurement.waterLevel.wakt + " cm, Gestern " + data.infopanel.data.station.measurement.waterLevel.dailyAverageDayBefore.avgw + " cm";
+          const today = parseFloat(data.infopanel.data.station.measurement.waterLevel.wakt);
+          const yesterday = parseFloat(data.infopanel.data.station.measurement.waterLevel.dailyAverageDayBefore.avgw);
+          const threshold = 0.1;
+          let trend = "stabil";
+
+          if (today > yesterday + threshold) {
+            trend = "Wasser läuft voll";
+          } else if (today < yesterday - threshold) {
+            trend = "Wasser läuft ab";
+          }
+
+          waterElement.textContent = "Heute " + today.toFixed(2) + " cm, Gestern " + yesterday.toFixed(2) + " cm, Trend: " + trend;
         })
         .catch(error => console.error("Fehler beim Laden der Wasserstandsdaten:", error));
     }
