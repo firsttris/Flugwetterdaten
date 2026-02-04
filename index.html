@@ -6,156 +6,345 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    html,
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #dbeafe;
+      --accent: #0ea5e9;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      height: 100%;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg) 0%, #e0e7ff 100%);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    body {
-      font-family: "Roboto", sans-serif;
-      line-height: 1.6;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    h3 {
-      font-size: 1.5em;
-      margin: 0.5em 0;
-    }
-
-    p {
-      margin: 0.5em 0;
-    }
-
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    .content {
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
       flex: 1;
     }
 
-    .small-text {
-      font-size: 0.8em;
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title::before {
+      content: '';
+      width: 4px;
+      height: 1.2em;
+      background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 2px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: white;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .data-row {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1rem;
+      align-items: baseline;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .data-row:first-child {
+      padding-top: 0;
+    }
+
+    .data-label {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .data-value {
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    ol {
+      padding-left: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    li {
+      padding: 0.5rem 0;
+      color: var(--text);
+      border-bottom: 1px dashed var(--border);
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    li::marker {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .links-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .link-item:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .link-item::before {
+      content: '→';
+      color: var(--primary);
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+
+    .link-item:hover::before {
+      transform: translateX(4px);
     }
 
     footer {
-      font-size: 0.8em;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      margin-top: auto;
     }
 
-    button {
-      margin: 1em 0;
-      padding: 0.5em 1em;
-      font-size: 1em;
-      cursor: pointer;
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
     }
 
-    @media (max-width: 600px) {
-      h3 {
-        font-size: 1.2em;
+    footer a:hover {
+      color: var(--primary);
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 1.5rem 1rem;
       }
 
-      p,
-      a {
-        font-size: 0.9em;
+      h1 {
+        font-size: 1.5rem;
       }
 
-      footer {
-        font-size: 0.8em;
-        text-align: center;
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .card {
+        padding: 1.25rem;
+        border-radius: 12px;
+      }
+
+      .data-row {
+        grid-template-columns: 1fr;
+      }
+
+      .data-value {
+        padding-left: 0;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="content">
-    <h3>Wetterinformationen NATO Rampe Rheinmünster</h3>
-    <b>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</b>
-    </br>
-    <img id="weatherImage" src="" alt="Wetterbild" />
-    </br>
-    <b>Letzte Aktualisierung</b>
-    <span id="updateTime">Noch nicht aktualisiert</span>
-    </br>
-    <b>Nächste Aktualisierung</b>
-    <span id="nextUpdateTime">Noch nicht geplant</span>
-    </br>
-    <b>Aktuelle Uhrzeit</b>
-    <span id="currentTime">Noch nicht aktualisiert</span>
-    </br>
-    <button onclick="updateImage()">Wetterbild neu laden</button>
-    </br>
-    <b>Aktuelle Wassertemperatur</b>
-    <p id="qualityTemperature">Noch nicht geladen</p>
-    <b>Aktueller Wasserstand relativ zum Pegelnullpunkt (110.06NHN+m)</b>
-    <p id="waterLevel">Noch nicht geladen</p>
-    <b>Erklärung der Felder</b> <span>(von links nach rechts)</span>
-    <ol>
-      <li>Kennbuchstabe der aktuell verbreiteten Wettermeldung</li>
-      <li>QNH in hPa (Luftdruck umgerechnet auf die Meereshöhe) Anm.: nicht identisch mit dem Umgebungsluftdruck</li>
-      <li>Übergangsflugfläche (ab dieser Höhe stellt der Pilot den Höhenmesser auf QNH um)</li>
-      <li>Temperatur (T) und Taupunkt (DP)</li>
-      <li>Wolkenuntergrenze (CB), also Bewölkung mehr als 4/8 in 100 Fuß und Sichtweite (VIS) in Meter</li>
-      <li>Flugwetterbedingungen</li>
-      <li>Datum, Sonnenaufgang/Sonnenuntergang (Zeiten in UTC)</li>
-      <li>Aktuelle Uhrzeit in UTC (UTC + 2h = Sommerzeit, UTC + 1h = Winterzeit)</li>
-      <li>Im großen Bild graphische Darstellung der aktuellen Betriebspiste</li>
-      <li>Feld in der Betriebspiste: Entsprechender Wind, Fett: Windrichtung in Grad, aus der der Wind kommt, Durchschnittliche Windgeschwindigkeit in Knoten. Der kleinere obere Wert zeigt Maximum- und Minimum-Windgeschwindigkeit, T = Rückenwind (tailwind), X = Seitenwind (crosswind)) </li>
-    </ol>
-    <b>Nützliche Links</b>
-    </br>
-    <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank">Windfinder
-      3-Tage Superforecast
-      für Flughafen Karlsruhe/Baden-Baden</a>
-    </br>
-    <a href="https://www-meteociel-com.translate.goog/previsions/24854/lauterbourg.htm?_x_tr_sl=fr&_x_tr_tl=de&_x_tr_hl=de&_x_tr_pto=wapp"
-      target="_blank">Meteociel 3-Tages-Wettervorhersage für Lauterbourg (67630)</a>
-    </br>
-    <a href="https://niz.baden-wuerttemberg.de/oberflaechengewaesser/gueteparameter?view=0&id=2838"
-      target="_blank">Niedrigwasser-Informationszentrum Baden-Württemberg LUBW</a>
-    </br>
-    <a href="https://www.elwis.de/DE/dynamisch/Wasserstaende/Pegeleinzeln%3AIFFEZHEIM" target="_blank">ELWIS -
-      Wasserstände & Vorhersagen an schifffahrtsrelevanten Pegeln - Iffezheim</a>
-    </br>
-    <a href="https://www.hvz.baden-wuerttemberg.de/pegel.html?id=09137" target="_blank">Hochwasservorhersagezentrale
-      Baden-Württemberg - Pegelstand Iffezheim</a>
+  <div class="container">
+    <header>
+      <h1>Wetterinformationen NATO Rampe Rheinmünster</h1>
+      <p class="subtitle">Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</p>
+    </header>
 
+    <div class="card">
+      <div class="card-title">Wetterbild</div>
+      <button class="btn" onclick="window.open('https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?timestamp=' + Date.now(), '_blank')">
+        Wetterbild öffnen
+      </button>
+      <p class="hint">Baden-Airpark blockiert externe Anfragen, daher wird das Bild in einem neuen Tab geöffnet.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Aktuelle Daten</div>
+      <div class="data-row">
+        <span class="data-label">Wassertemperatur</span>
+        <span class="data-value" id="qualityTemperature">Noch nicht geladen</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Wasserstand (rel. zu 110.06 NHN+m)</span>
+        <span class="data-value" id="waterLevel">Noch nicht geladen</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Erklärung von Wetterbild (von links nach rechts)</div>
+      <ol>
+        <li>Kennbuchstabe der aktuell verbreiteten Wettermeldung</li>
+        <li>QNH in hPa (Luftdruck umgerechnet auf die Meereshöhe) — nicht identisch mit dem Umgebungsluftdruck</li>
+        <li>Übergangsflugfläche (ab dieser Höhe stellt der Pilot den Höhenmesser auf QNH um)</li>
+        <li>Temperatur (T) und Taupunkt (DP)</li>
+        <li>Wolkenuntergrenze (CB), Bewölkung mehr als 4/8 in 100 Fuß und Sichtweite (VIS) in Meter</li>
+        <li>Flugwetterbedingungen</li>
+        <li>Datum, Sonnenaufgang/Sonnenuntergang (Zeiten in UTC)</li>
+        <li>Aktuelle Uhrzeit in UTC (UTC + 2h = Sommerzeit, UTC + 1h = Winterzeit)</li>
+        <li>Im großen Bild: graphische Darstellung der aktuellen Betriebspiste</li>
+        <li>Feld in der Betriebspiste: Wind (Fett: Richtung in Grad, Durchschnitt in Knoten), oberer Wert zeigt Max/Min, T = Rückenwind, X = Seitenwind</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Nützliche Links</div>
+      <div class="links-grid">
+        <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank" class="link-item">
+          Windfinder 3-Tage Superforecast für Karlsruhe/Baden-Baden
+        </a>
+        <a href="https://www-meteociel-com.translate.goog/previsions/24854/lauterbourg.htm?_x_tr_sl=fr&_x_tr_tl=de&_x_tr_hl=de&_x_tr_pto=wapp" target="_blank" class="link-item">
+          Meteociel 3-Tages-Wettervorhersage für Lauterbourg
+        </a>
+        <a href="https://niz.baden-wuerttemberg.de/oberflaechengewaesser/gueteparameter?view=0&id=2838" target="_blank" class="link-item">
+          Niedrigwasser-Informationszentrum Baden-Württemberg LUBW
+        </a>
+        <a href="https://www.elwis.de/DE/dynamisch/Wasserstaende/Pegeleinzeln%3AIFFEZHEIM" target="_blank" class="link-item">
+          ELWIS - Wasserstände & Vorhersagen Iffezheim
+        </a>
+        <a href="https://www.hvz.baden-wuerttemberg.de/pegel.html?id=09137" target="_blank" class="link-item">
+          Hochwasservorhersagezentrale BW - Pegelstand Iffezheim
+        </a>
+      </div>
+    </div>
   </div>
+
   <footer>
     <a href="https://github.com/firsttris/Flugwetterdaten" target="_blank">Quellcode auf GitHub</a>
   </footer>
 
   <script>
-    const refreshInterval = 60000;
-    function updateImage() {
-      const img = document.getElementById("weatherImage");
-      img.src =
-        "https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?" +
-        new Date().getTime();
-
-      const updateTime = document.getElementById("updateTime");
-      const now = new Date();
-      updateTime.textContent = now.toLocaleString();
-
-      const nextUpdateTime = document.getElementById("nextUpdateTime");
-      const nextUpdate = new Date(now.getTime() + refreshInterval);
-      nextUpdateTime.textContent = nextUpdate.toLocaleString();
-    }
-
-    function updateCurrentTime() {
-      const currentTime = document.getElementById("currentTime");
-      const now = new Date();
-      currentTime.textContent = now.toLocaleTimeString();
-    }
-
     function fetchQualityTemperature() {
       fetch("https://lupo-cloud.de/niz-app/quality-station?id=2838&component=guete-temp&from=1d-ago")
         .then(response => {
@@ -166,7 +355,10 @@
         })
         .then(data => {
           const qualityElement = document.getElementById("qualityTemperature");
-          qualityElement.textContent = data.tempchart.chartSubtitle.text + "Uhr.";
+          const text = data.tempchart.chartSubtitle.text
+            .replace(/.*letzter Wert\s*/i, "")
+            .trim();
+          qualityElement.textContent = text;
         })
         .catch(error => console.error("Fehler beim Laden der Daten:", error));
     }
@@ -197,12 +389,8 @@
         .catch(error => console.error("Fehler beim Laden der Wasserstandsdaten:", error));
     }
 
-    updateImage();
-    updateCurrentTime();
     fetchQualityTemperature();
     fetchWaterLevel();
-    setInterval(updateImage, refreshInterval);
-    setInterval(updateCurrentTime, 1000);
   </script>
 </body>
 
