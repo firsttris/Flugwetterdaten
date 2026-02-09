@@ -287,12 +287,30 @@
 
     <div class="card">
       <div class="card-title">Wetterbild</div>
-      <button class="btn"
-        onclick="window.open('https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?timestamp=' + Date.now(), '_blank')">
-        Wetterbild öffnen
-      </button>
-      <p class="hint">Baden-Airpark blockiert externe Anfragen, daher wird das Bild in einem neuen Tab geöffnet. Für ein
-        aktualisiertes Bild: Tab schließen und Button erneut klicken.</p>
+
+      <div id="weather-image-container"
+        style="min-height: 200px; display: flex; justify-content: center; align-items: center; background: #f1f5f9; border-radius: 8px; overflow: hidden;">
+        <!-- Loading Spinner / Platzhalter -->
+        <div style="color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <div
+            style="width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;">
+          </div>
+          <span>Lade Wettergrafik...</span>
+        </div>
+      </div>
+      <p class="hint" style="margin-top: 0.75rem;">
+        Datenquelle: Baden-Airpark (via Proxy)
+        <br>
+        <span style="font-size: 0.8em; opacity: 0.8;">Aktualisiert: <span id="weather-update-time">-</span></span>
+      </p>
+
+      <style>
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
     </div>
 
     <div class="card">
@@ -398,6 +416,51 @@
         })
         .catch(error => console.error("Fehler beim Laden der Wasserstandsdaten:", error));
     }
+
+    function loadWeatherImage() {
+      const workerUrl = "https://silent-night-c341.tristanteufel.workers.dev/";
+      const container = document.getElementById('weather-image-container');
+      const updateTimeElement = document.getElementById('weather-update-time');
+      const now = new Date();
+
+      if (updateTimeElement) {
+        updateTimeElement.textContent = now.toLocaleTimeString('de-DE', {
+          hour: '2-digit',
+          minute: '2-digit'
+        }) + ' Uhr';
+      }
+
+      const img = new Image();
+
+      img.onload = () => {
+        container.innerHTML = '';
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        img.style.display = 'block';
+        img.style.borderRadius = '8px';
+        container.appendChild(img);
+      };
+
+      img.onerror = () => {
+        container.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); padding: 1rem;">
+            <p style="color: #ef4444; font-weight: 500; margin-bottom: 0.5rem;">Fehler beim Laden</p>
+            <button onclick="loadWeatherImage()" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+              Erneut versuchen
+            </button>
+          </div>
+        `;
+      };
+
+      // Cache-Busting
+      img.src = workerUrl + "?t=" + now.getTime();
+    }
+
+    // Auto-Reload alle 5 Minuten
+    setInterval(loadWeatherImage, 5 * 60 * 1000);
+
+    // Initial laden
+    loadWeatherImage();
 
     fetchQualityTemperature();
     fetchWaterLevel();
