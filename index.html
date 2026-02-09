@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Flugwetterdaten Flughafen Karlsruhe/Baden-Baden</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="theme-color" content="#2563eb">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,8 +24,8 @@
       --text-muted: #64748b;
       --border: #e2e8f0;
       --success: #10b981;
-      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
     * {
@@ -284,10 +287,12 @@
 
     <div class="card">
       <div class="card-title">Wetterbild</div>
-      <button class="btn" onclick="window.open('https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?timestamp=' + Date.now(), '_blank')">
+      <button class="btn"
+        onclick="window.open('https://www.baden-airpark.de/app/themes/nova/app/FileExport/weather.php?timestamp=' + Date.now(), '_blank')">
         Wetterbild öffnen
       </button>
-      <p class="hint">Baden-Airpark blockiert externe Anfragen, daher wird das Bild in einem neuen Tab geöffnet. Für ein aktualisiertes Bild: Tab schließen und Button erneut klicken.</p>
+      <p class="hint">Baden-Airpark blockiert externe Anfragen, daher wird das Bild in einem neuen Tab geöffnet. Für ein
+        aktualisiertes Bild: Tab schließen und Button erneut klicken.</p>
     </div>
 
     <div class="card">
@@ -314,23 +319,28 @@
         <li>Datum, Sonnenaufgang/Sonnenuntergang (Zeiten in UTC)</li>
         <li>Aktuelle Uhrzeit in UTC (UTC + 2h = Sommerzeit, UTC + 1h = Winterzeit)</li>
         <li>Im großen Bild: graphische Darstellung der aktuellen Betriebspiste</li>
-        <li>Feld in der Betriebspiste: Wind (Fett: Richtung in Grad, Durchschnitt in Knoten), oberer Wert zeigt Max/Min, T = Rückenwind, X = Seitenwind</li>
+        <li>Feld in der Betriebspiste: Wind (Fett: Richtung in Grad, Durchschnitt in Knoten), oberer Wert zeigt Max/Min,
+          T = Rückenwind, X = Seitenwind</li>
       </ol>
     </div>
 
     <div class="card">
       <div class="card-title">Nützliche Links</div>
       <div class="links-grid">
-        <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank" class="link-item">
+        <a href="https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden" target="_blank"
+          class="link-item">
           Windfinder 3-Tage Superforecast für Karlsruhe/Baden-Baden
         </a>
-        <a href="https://www-meteociel-com.translate.goog/previsions/24854/lauterbourg.htm?_x_tr_sl=fr&_x_tr_tl=de&_x_tr_hl=de&_x_tr_pto=wapp" target="_blank" class="link-item">
+        <a href="https://www-meteociel-com.translate.goog/previsions/24854/lauterbourg.htm?_x_tr_sl=fr&_x_tr_tl=de&_x_tr_hl=de&_x_tr_pto=wapp"
+          target="_blank" class="link-item">
           Meteociel 3-Tages-Wettervorhersage für Lauterbourg
         </a>
-        <a href="https://niz.baden-wuerttemberg.de/oberflaechengewaesser/gueteparameter?view=0&id=2838" target="_blank" class="link-item">
+        <a href="https://niz.baden-wuerttemberg.de/oberflaechengewaesser/gueteparameter?view=0&id=2838" target="_blank"
+          class="link-item">
           Niedrigwasser-Informationszentrum Baden-Württemberg LUBW
         </a>
-        <a href="https://www.elwis.de/DE/dynamisch/Wasserstaende/Pegeleinzeln%3AIFFEZHEIM" target="_blank" class="link-item">
+        <a href="https://www.elwis.de/DE/dynamisch/Wasserstaende/Pegeleinzeln%3AIFFEZHEIM" target="_blank"
+          class="link-item">
           ELWIS - Wasserstände & Vorhersagen Iffezheim
         </a>
         <a href="https://www.hvz.baden-wuerttemberg.de/pegel.html?id=09137" target="_blank" class="link-item">
@@ -391,6 +401,17 @@
 
     fetchQualityTemperature();
     fetchWaterLevel();
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
   </script>
 </body>
 
