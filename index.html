@@ -12,270 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --primary-light: #dbeafe;
-      --accent: #0ea5e9;
-      --bg: #f8fafc;
-      --bg-card: #ffffff;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --success: #10b981;
-      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
+  <link rel="stylesheet" href="styles.css">
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      line-height: 1.7;
-      color: var(--text);
-      background: linear-gradient(135deg, var(--bg) 0%, #e0e7ff 100%);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-      flex: 1;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.025em;
-    }
-
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 1.75rem;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      box-shadow: var(--shadow-lg);
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .card-title::before {
-      content: '';
-      width: 4px;
-      height: 1.2em;
-      background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
-      border-radius: 2px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.875rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: inherit;
-      color: white;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.4);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    .hint {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 0.75rem;
-      padding: 0.75rem 1rem;
-      background: var(--bg);
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
-    }
-
-    .data-row {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 1rem;
-      align-items: baseline;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .data-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .data-row:first-child {
-      padding-top: 0;
-    }
-
-    .data-label {
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .data-value {
-      color: var(--text-muted);
-      font-variant-numeric: tabular-nums;
-    }
-
-    ol {
-      padding-left: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    li {
-      padding: 0.5rem 0;
-      color: var(--text);
-      border-bottom: 1px dashed var(--border);
-    }
-
-    li:last-child {
-      border-bottom: none;
-    }
-
-    li::marker {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    .links-grid {
-      display: grid;
-      gap: 0.75rem;
-    }
-
-    .link-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 1.25rem;
-      background: var(--bg);
-      border-radius: 10px;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.2s ease;
-      border: 1px solid transparent;
-    }
-
-    .link-item:hover {
-      background: var(--primary-light);
-      border-color: var(--primary);
-      transform: translateX(4px);
-    }
-
-    .link-item::before {
-      content: '→';
-      color: var(--primary);
-      font-weight: 600;
-      transition: transform 0.2s ease;
-    }
-
-    .link-item:hover::before {
-      transform: translateX(4px);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      margin-top: auto;
-    }
-
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s ease;
-    }
-
-    footer a:hover {
-      color: var(--primary);
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        padding: 1.5rem 1rem;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .subtitle {
-        font-size: 1rem;
-      }
-
-      .card {
-        padding: 1.25rem;
-        border-radius: 12px;
-      }
-
-      .data-row {
-        grid-template-columns: 1fr;
-      }
-
-      .data-value {
-        padding-left: 0;
-      }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -299,18 +37,12 @@
         </div>
       </div>
       <p class="hint" style="margin-top: 0.75rem;">
-        Datenquelle: Baden-Airpark (via Proxy)
+        Datenquelle: Baden-Airpark (via Cloudflare Proxy)
         <br>
         <span style="font-size: 0.8em; opacity: 0.8;">Aktualisiert: <span id="weather-update-time">-</span></span>
       </p>
 
-      <style>
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-      </style>
+
     </div>
 
     <div class="card">
@@ -371,6 +103,30 @@
   <footer>
     <a href="https://github.com/firsttris/Flugwetterdaten" target="_blank">Quellcode auf GitHub</a>
   </footer>
+
+  <!-- Install Banner -->
+  <div id="install-banner">
+    <div class="install-content">
+      <div class="install-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M19 12l-7 7-7-7" />
+        </svg>
+      </div>
+      <div>
+        <h3 style="margin-bottom: 0.25rem; font-weight: 700;">App installieren?</h3>
+        <div id="install-text" style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.4;">
+          Installiere die App für direkten Zugriff vom Startbildschirm. Schneller und funktioniert besser!
+        </div>
+      </div>
+    </div>
+    <div class="install-actions">
+      <button class="btn btn-outline" onclick="dismissInstall()"
+        style="flex: 1; justify-content: center;">Später</button>
+      <button id="install-button" class="btn" onclick="installApp()"
+        style="flex: 1; justify-content: center; display: none;">Jetzt installieren</button>
+    </div>
+  </div>
 
   <script>
     function fetchQualityTemperature() {
@@ -464,6 +220,61 @@
 
     fetchQualityTemperature();
     fetchWaterLevel();
+
+    // PWA Install Logic
+    let deferredPrompt;
+    const installBanner = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-button');
+    const installText = document.getElementById('install-text');
+
+    // Check if app is capable of being installed
+    // Only show if not already in standalone mode
+    if (!window.matchMedia('(display-mode: standalone)').matches) {
+
+      // 1. Android / Desktop Support
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        // Update UI notify the user they can add to home screen
+        showInstallBanner(true);
+      });
+
+      // 2. iOS Support (manuelle Erkennung)
+      const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      // Nur anzeigen wenn wir sicher sind, dass es iOS ist und nicht standalone
+      if (isIos && !localStorage.getItem('install-dismissed')) {
+        installText.innerHTML = `Tippe unten auf <span class="ios-share"></span> <strong>Teilen</strong> und dann auf <strong>"Zum Home-Bildschirm"</strong> <span style="font-size:1.2em">⊞</span>`;
+        installBanner.classList.add('show');
+        installBtn.style.display = 'none'; // Button verstecken da manuell
+      }
+    }
+
+    function showInstallBanner(hasButton) {
+      if (localStorage.getItem('install-dismissed')) return;
+
+      installBanner.classList.add('show');
+      if (hasButton) {
+        installBtn.style.display = 'inline-flex';
+      }
+    }
+
+    function dismissInstall() {
+      installBanner.classList.remove('show');
+      localStorage.setItem('install-dismissed', 'true');
+    }
+
+    async function installApp() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          deferredPrompt = null;
+        }
+        dismissInstall();
+      }
+    }
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
