@@ -229,6 +229,21 @@ footer a:hover {
   color: var(--primary);
 }
 
+/* Weather Image Card - Full width on mobile */
+.weather-image-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s ease;
+}
+
+.weather-image-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
 @media (max-width: 640px) {
   .container {
     padding: 1.5rem 1rem;
@@ -245,6 +260,16 @@ footer a:hover {
   .card {
     padding: 1.25rem;
     border-radius: 12px;
+  }
+
+  /* Weather image card goes full width on mobile */
+  .weather-image-card {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 1.25rem 1rem;
   }
 
   .data-row {
