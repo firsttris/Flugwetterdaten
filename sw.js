@@ -1,5 +1,5 @@
 // Minimaler Service Worker nur für PWA-Installation
-// KEIN Caching - alle Requests gehen direkt ins Netzwerk
+// KEIN Caching, KEIN Fetch-Handling - nur Installation ermöglichen
 
 self.addEventListener('install', (event) => {
     // Sofort aktivieren, kein Warten
@@ -17,14 +17,4 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch-Event: Nur same-origin Requests behandeln, externe ignorieren
-self.addEventListener('fetch', (event) => {
-    // Externe Requests (wie Cloudflare Analytics) ignorieren
-    const requestUrl = new URL(event.request.url);
-    if (requestUrl.origin !== location.origin) {
-        return; // Nicht behandeln, Browser macht das normal
-    }
-
-    // Same-origin Requests direkt durchreichen (kein Caching)
-    event.respondWith(fetch(event.request));
-});
+// KEIN fetch-Event-Listener = Browser behandelt alle Requests normal
