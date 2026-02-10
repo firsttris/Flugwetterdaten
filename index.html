@@ -550,9 +550,9 @@
           await Promise.all(cacheNames.map(name => caches.delete(name)));
         }
 
-        // Seite neu laden
+        // Seite neu laden mit Timestamp um Cache zu umgehen
         alert('Cache gelöscht! Die Seite wird jetzt neu geladen.');
-        window.location.reload(true);
+        window.location.href = window.location.pathname + '?reset=' + new Date().getTime();
       } catch (error) {
         console.error('Fehler beim Zurücksetzen:', error);
         alert('Fehler beim Zurücksetzen. Bitte versuche es erneut.');
