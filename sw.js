@@ -28,6 +28,10 @@ self.addEventListener('fetch', (event) => {
     // Nur GET-Requests behandeln
     if (event.request.method !== 'GET') return;
 
+    // Nur same-origin Requests behandeln (verhindert Fehler mit externen Skripten wie Cloudflare Analytics)
+    const requestUrl = new URL(event.request.url);
+    if (requestUrl.origin !== location.origin) return;
+
     // Strategie: Network First (Netzwerk zuerst, dann Cache)
     // Das verhindert, dass alte Versionen hängen bleiben.
     event.respondWith(
