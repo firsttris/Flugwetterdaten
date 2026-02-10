@@ -39,7 +39,8 @@
       <p class="hint" style="margin-top: 0.75rem;">
         <strong>Bildrechte:</strong> <a href="https://www.baden-airpark.de/" target="_blank"
           style="color: inherit; text-decoration: underline;">Baden-Airpark GmbH</a>.
-        <span style="display: block; margin-top: 0.25rem;">Diese Darstellung dient ausschließlich der schnellen
+        <span style="display: block; margin-top: 0.25rem;">Die Einbindung erfolgt im Glauben an ein berechtigtes
+          Interesse der Allgemeinheit (Sicherheit). Diese Darstellung dient ausschließlich der schnellen
           Information.</span>
         <br>
         <span style="font-size: 0.8em; opacity: 0.8;">Aktualisiert: <span id="weather-update-time">-</span></span>
@@ -48,15 +49,43 @@
 
     </div>
 
-    <div class="card">
-      <div class="card-title">Aktuelle Daten</div>
-      <div class="data-row">
-        <span class="data-label">Wassertemperatur</span>
-        <span class="data-value" id="qualityTemperature">Noch nicht geladen</span>
+    <div class="stats-grid">
+      <!-- Wassertemperatur Card -->
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Wassertemperatur</span>
+          <div class="stat-icon temp">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+            </svg>
+          </div>
+        </div>
+        <div class="stat-main-value" id="temp-value">--</div>
+        <div class="stat-subtext">
+          <span id="temp-trend-text">Lade Daten...</span>
+        </div>
       </div>
-      <div class="data-row">
-        <span class="data-label">Wasserstand (rel. zu 110.06 NHN+m)</span>
-        <span class="data-value" id="waterLevel">Noch nicht geladen</span>
+
+      <!-- Wasserstand Card -->
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Wasserstand</span>
+          <div class="stat-icon water">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 21l-3-12-5 3-5-3-3 12" />
+              <path d="M22 17H2" />
+            </svg>
+          </div>
+        </div>
+        <div class="stat-main-value" id="water-value">--</div>
+        <div class="stat-subtext" style="justify-content: space-between;">
+          <span id="water-subtext">Lade Daten...</span>
+          <span id="water-trend-badge" class="trend-badge trend-stable" style="display: none;">
+            <span>-</span>
+          </span>
+        </div>
       </div>
     </div>
 
@@ -118,9 +147,9 @@
       <p style="margin-bottom: 0.75rem;">
         <strong>2. Urheberrecht:</strong> Die eingebundenen Wettergrafiken sind Eigentum der jeweiligen Betreiber. Die
         Einbindung erfolgt im Glauben an ein berechtigtes Interesse der Allgemeinheit (Sicherheit). Sollte die
-        Darstellung seitens der Urheber nicht erwünscht sein, bitten wir um eine kurze Nachricht (via <a
-          href="https://github.com/firsttris/Flugwetterdaten/issues" target="_blank" style="color: inherit;">GitHub
-          Issue</a>), und wir entfernen die Inhalte umgehend.
+        Darstellung seitens der Urheber nicht erwünscht sein, bitten wir um eine kurze Nachricht <a
+          href="https://github.com/firsttris/Flugwetterdaten/issues" target="_blank" style="color: inherit;">(GitHub
+          Issue)</a>, und wir entfernen die Inhalte umgehend.
       </p>
 
       <p style="margin-bottom: 0;">
@@ -169,13 +198,28 @@
           return response.json();
         })
         .then(data => {
-          const qualityElement = document.getElementById("qualityTemperature");
-          const text = data.tempchart.chartSubtitle.text
-            .replace(/.*letzter Wert\s*/i, "")
-            .trim();
-          qualityElement.textContent = text;
+          const tempValueElement = document.getElementById("temp-value");
+          const tempTrendElement = document.getElementById("temp-trend-text");
+
+          const rawText = data.tempchart.chartSubtitle.text;
+          // Extract just the temperature value (e.g., "18,5 °C")
+          const tempMatch = rawText.match(/([\d,]+)\s*°C/);
+
+          if (tempMatch) {
+            tempValueElement.textContent = tempMatch[1] + " °C";
+            // Clean up the subtitle text
+            const timestamp = rawText.replace(/.*letzter Wert\s*/i, "").replace(tempMatch[0], "").trim();
+            tempTrendElement.textContent = "Messung: " + timestamp;
+          } else {
+            // Fallback
+            tempValueElement.textContent = "--";
+            tempTrendElement.textContent = rawText;
+          }
         })
-        .catch(error => console.error("Fehler beim Laden der Daten:", error));
+        .catch(error => {
+          console.error("Fehler beim Laden der Daten:", error)
+          document.getElementById("temp-trend-text").textContent = "Fehler beim Laden";
+        });
     }
 
     function fetchWaterLevel() {
@@ -187,21 +231,39 @@
           return response.json();
         })
         .then(data => {
-          const waterElement = document.getElementById("waterLevel");
+          const valueElement = document.getElementById("water-value");
+          const subtextElement = document.getElementById("water-subtext");
+          const trendBadge = document.getElementById("water-trend-badge");
+
           const today = parseFloat(data.infopanel.data.station.measurement.waterLevel.wakt);
           const yesterday = parseFloat(data.infopanel.data.station.measurement.waterLevel.dailyAverageDayBefore.avgw);
           const threshold = 0.1;
-          let trend = "stabil";
+
+          // Set Main Value
+          valueElement.textContent = today.toFixed(2) + " cm";
+
+          // Set Subtext
+          subtextElement.textContent = "Gestern: " + yesterday.toFixed(2) + " cm";
+
+          // Trend Logic
+          trendBadge.style.display = "inline-flex";
+          trendBadge.className = "trend-badge"; // Reset classes
 
           if (today > yesterday + threshold) {
-            trend = "Wasser läuft voll";
+            trendBadge.classList.add("trend-up");
+            trendBadge.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Steigend`;
           } else if (today < yesterday - threshold) {
-            trend = "Wasser läuft ab";
+            trendBadge.classList.add("trend-down"); // In water context, usually low water is bad, or maybe good? Let's use red for warning/change. Actually traditionally red is "down". Let's use neutral or specific colors. For now, red = down.
+            trendBadge.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Fallend`;
+          } else {
+            trendBadge.classList.add("trend-stable");
+            trendBadge.innerHTML = `Stabil`;
           }
-
-          waterElement.textContent = "Heute " + today.toFixed(2) + " cm, Gestern " + yesterday.toFixed(2) + " cm, Trend: " + trend;
         })
-        .catch(error => console.error("Fehler beim Laden der Wasserstandsdaten:", error));
+        .catch(error => {
+          console.error("Fehler beim Laden der Wasserstandsdaten:", error);
+          document.getElementById("water-subtext").textContent = "Fehler beim Laden";
+        });
     }
 
     function loadWeatherImage() {
