@@ -1,3 +1,4 @@
+// Service Worker Version 2.0 - Minimal PWA support only
 self.addEventListener('install', (event) => {
     self.skipWaiting();
 });
