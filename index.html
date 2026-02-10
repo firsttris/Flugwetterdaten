@@ -195,6 +195,10 @@
     </div>
 
     <div style="margin-top: 2rem; text-align: center;">
+      <button onclick="resetServiceWorker()" class="btn" style="margin-bottom: 1rem; background: #ef4444;">
+        🔄 App zurücksetzen (Cache löschen)
+      </button>
+      <br>
       <a href="https://github.com/firsttris/Flugwetterdaten" target="_blank"
         style="text-decoration: none; color: var(--primary);">Quellcode auf GitHub</a>
     </div>
@@ -523,6 +527,35 @@
           deferredPrompt = null;
         }
         dismissInstall();
+      }
+    }
+
+    async function resetServiceWorker() {
+      if (!confirm('Dies wird die App zurücksetzen und neu laden. Fortfahren?')) {
+        return;
+      }
+
+      try {
+        // Alle Service Worker deregistrieren
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (let registration of registrations) {
+            await registration.unregister();
+          }
+        }
+
+        // Alle Caches löschen
+        if ('caches' in window) {
+          const cacheNames = await caches.keys();
+          await Promise.all(cacheNames.map(name => caches.delete(name)));
+        }
+
+        // Seite neu laden
+        alert('Cache gelöscht! Die Seite wird jetzt neu geladen.');
+        window.location.reload(true);
+      } catch (error) {
+        console.error('Fehler beim Zurücksetzen:', error);
+        alert('Fehler beim Zurücksetzen. Bitte versuche es erneut.');
       }
     }
 
