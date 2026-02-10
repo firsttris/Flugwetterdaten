@@ -17,8 +17,14 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch-Event: Einfach durchreichen, KEIN Caching
+// Fetch-Event: Nur same-origin Requests behandeln, externe ignorieren
 self.addEventListener('fetch', (event) => {
-    // Alle Requests gehen direkt ins Netzwerk
+    // Externe Requests (wie Cloudflare Analytics) ignorieren
+    const requestUrl = new URL(event.request.url);
+    if (requestUrl.origin !== location.origin) {
+        return; // Nicht behandeln, Browser macht das normal
+    }
+
+    // Same-origin Requests direkt durchreichen (kein Caching)
     event.respondWith(fetch(event.request));
 });
