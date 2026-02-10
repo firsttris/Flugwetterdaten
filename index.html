@@ -106,6 +106,23 @@
           <span id="flow-subtext">Lade Daten...</span>
         </div>
       </div>
+
+      <!-- Hochwasserstatus Card -->
+      <div class="stat-card" id="flood-card">
+        <div class="stat-header">
+          <span class="stat-title">Hochwasserstatus</span>
+          <div class="stat-icon flood">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+            </svg>
+          </div>
+        </div>
+        <div class="stat-main-value" id="flood-value">--</div>
+        <div class="stat-subtext">
+          <span id="flood-subtext">Lade Daten...</span>
+        </div>
+      </div>
     </div>
 
     <div class="card">
@@ -338,6 +355,72 @@
         });
     }
 
+    function fetchFloodStatus() {
+      fetch("https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/IFFEZHEIM.json?includeTimeseries=true&includeCurrentMeasurement=true")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Netzwerkantwort war nicht ok");
+          }
+          return response.json();
+        })
+        .then(data => {
+          const floodValueElement = document.getElementById("flood-value");
+          const floodSubtextElement = document.getElementById("flood-subtext");
+          const floodCard = document.getElementById("flood-card");
+
+          // Find the water level (W) timeseries
+          const waterTimeseries = data.timeseries.find(ts => ts.shortname === "W");
+
+          if (waterTimeseries && waterTimeseries.currentMeasurement) {
+            const waterLevel = waterTimeseries.currentMeasurement.value; // cm
+            const stateMnwMhw = waterTimeseries.currentMeasurement.stateMnwMhw; // normal, low, high
+            const stateNswHsw = waterTimeseries.currentMeasurement.stateNswHsw; // unknown, low, high
+            const timestamp = waterTimeseries.currentMeasurement.timestamp;
+
+            // Determine status and styling
+            let statusText = "Unbekannt";
+            let statusColor = "#64748b"; // gray
+
+            // Priority: stateNswHsw > stateMnwMhw
+            if (stateNswHsw === "high" || stateMnwMhw === "high") {
+              statusText = "⚠️ Hochwasser";
+              statusColor = "#ef4444"; // red
+            } else if (stateNswHsw === "low" || stateMnwMhw === "low") {
+              statusText = "Niedrigwasser";
+              statusColor = "#3b82f6"; // blue
+            } else if (stateMnwMhw === "normal") {
+              statusText = "✓ Normal";
+              statusColor = "#10b981"; // green
+            } else if (stateMnwMhw === "unknown" || stateNswHsw === "unknown") {
+              statusText = "Normal";
+              statusColor = "#10b981"; // green (assuming normal if unknown)
+            }
+
+            // Display the status
+            floodValueElement.textContent = statusText;
+            floodValueElement.style.color = statusColor;
+
+            // Format timestamp
+            const date = new Date(timestamp);
+            const formattedTime = date.toLocaleString('de-DE', {
+              day: '2-digit',
+              month: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+
+            floodSubtextElement.textContent = `Pegel: ${waterLevel} cm (${formattedTime})`;
+          } else {
+            floodValueElement.textContent = "--";
+            floodSubtextElement.textContent = "Keine Daten verfügbar";
+          }
+        })
+        .catch(error => {
+          console.error("Fehler beim Laden des Hochwasserstatus:", error);
+          document.getElementById("flood-subtext").textContent = "Fehler beim Laden";
+        });
+    }
+
     function loadWeatherImage() {
       const workerUrl = "https://silent-night-c341.tristanteufel.workers.dev/";
       const container = document.getElementById('weather-image-container');
@@ -386,6 +469,7 @@
     fetchQualityTemperature();
     fetchWaterLevel();
     fetchFlowVelocity();
+    fetchFloodStatus();
 
     // PWA Install Logic
     let deferredPrompt;

@@ -405,6 +405,11 @@ footer a:hover {
   color: #10b981;
 }
 
+.stat-icon.flood {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
 .stat-main-value {
   font-size: 2.5rem;
   font-weight: 800;
