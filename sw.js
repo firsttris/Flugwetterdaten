@@ -21,6 +21,12 @@ self.addEventListener('activate', (event) => {
                 keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
             );
         }).then(() => self.clients.claim())
+            .then(() => {
+                // Benachrichtige alle Clients über das Update
+                return self.clients.matchAll().then((clients) => {
+                    clients.forEach((client) => client.postMessage({ type: 'SW_UPDATED' }));
+                });
+            })
     );
 });
 
