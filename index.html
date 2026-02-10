@@ -87,6 +87,25 @@
           </span>
         </div>
       </div>
+
+      <!-- Strömungsgeschwindigkeit Card -->
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Strömungsgeschwindigkeit</span>
+          <div class="stat-icon flow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+          </div>
+        </div>
+        <div class="stat-main-value" id="flow-value">--</div>
+        <div class="stat-subtext">
+          <span id="flow-subtext">Lade Daten...</span>
+        </div>
+      </div>
     </div>
 
     <div class="card">
@@ -266,6 +285,59 @@
         });
     }
 
+    function fetchFlowVelocity() {
+      fetch("https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/IFFEZHEIM.json?includeTimeseries=true&includeCurrentMeasurement=true")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Netzwerkantwort war nicht ok");
+          }
+          return response.json();
+        })
+        .then(data => {
+          const flowValueElement = document.getElementById("flow-value");
+          const flowSubtextElement = document.getElementById("flow-subtext");
+
+          // Find the flow rate (Q) timeseries
+          const flowTimeseries = data.timeseries.find(ts => ts.shortname === "Q");
+
+          if (flowTimeseries && flowTimeseries.currentMeasurement) {
+            const flowRateM3s = flowTimeseries.currentMeasurement.value; // m³/s
+            const timestamp = flowTimeseries.currentMeasurement.timestamp;
+
+            // Calculate velocity: v = Q / A
+            // A = width × depth = 300m × 6m = 1800m²
+            const crossSectionArea = 300 * 6; // m²
+            const avgVelocityMs = flowRateM3s / crossSectionArea; // m/s (average)
+
+            // Surface velocity is typically 1.2-1.5x the average velocity
+            // Using factor 1.3 for realistic surface flow speed
+            const surfaceVelocityMs = avgVelocityMs * 1.3;
+            const velocityKmh = surfaceVelocityMs * 3.6; // km/h
+
+            // Display the velocity
+            flowValueElement.textContent = velocityKmh.toFixed(2) + " km/h";
+
+            // Format timestamp
+            const date = new Date(timestamp);
+            const formattedTime = date.toLocaleString('de-DE', {
+              day: '2-digit',
+              month: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+
+            flowSubtextElement.textContent = `Abfluss: ${flowRateM3s} m³/s (${formattedTime})`;
+          } else {
+            flowValueElement.textContent = "--";
+            flowSubtextElement.textContent = "Keine Daten verfügbar";
+          }
+        })
+        .catch(error => {
+          console.error("Fehler beim Laden der Strömungsdaten:", error);
+          document.getElementById("flow-subtext").textContent = "Fehler beim Laden";
+        });
+    }
+
     function loadWeatherImage() {
       const workerUrl = "https://silent-night-c341.tristanteufel.workers.dev/";
       const container = document.getElementById('weather-image-container');
@@ -313,6 +385,7 @@
 
     fetchQualityTemperature();
     fetchWaterLevel();
+    fetchFlowVelocity();
 
     // PWA Install Logic
     let deferredPrompt;
