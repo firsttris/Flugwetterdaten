@@ -530,33 +530,11 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
           .then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-
-            // Prüfe auf Updates
-            registration.addEventListener('updatefound', () => {
-              const newWorker = registration.installing;
-              console.log('Neuer Service Worker gefunden, wird installiert...');
-
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
-                  console.log('Neuer Service Worker aktiviert - Seite wird neu geladen');
-                }
-              });
-            });
-          }, err => {
+            console.log('ServiceWorker registration successful');
+          })
+          .catch(err => {
             console.log('ServiceWorker registration failed: ', err);
           });
-      });
-
-      // Höre auf Nachrichten vom Service Worker
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data && event.data.type === 'SW_UPDATED') {
-          console.log('Service Worker Update erkannt - Seite wird neu geladen');
-          // Kurze Verzögerung, damit der neue SW vollständig aktiv ist
-          setTimeout(() => {
-            window.location.reload();
-          }, 100);
-        }
       });
     }
   </script>
