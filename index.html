@@ -26,27 +26,36 @@
     <div class="weather-image-card">
       <div class="card-title">Wetterbild</div>
 
-      <div id="weather-image-container"
-        style="min-height: 200px; display: flex; justify-content: center; align-items: center; background: #f1f5f9; border-radius: 8px; overflow: hidden;">
-        <!-- Loading Spinner / Platzhalter -->
-        <div style="color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-          <div
-            style="width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;">
-          </div>
-          <span>Lade Wettergrafik...</span>
-        </div>
+      <div style="display: flex; justify-content: center; align-items: center; background: #f1f5f9; border-radius: 8px; overflow: hidden; padding: 0.75rem;">
+        <a href="https://metar-taf.com/de/metar/EDSB" id="metartaf-fqeZ4GFg"
+          style="font-size:18px; font-weight:500; color:#000; width:350px; height:278px; display:block">METAR Karlsruhe Baden-Baden Airport</a>
+        <script async defer crossorigin="anonymous"
+          src="https://metar-taf.com/de/embed-js/EDSB?layout=landscape&qnh=hPa&rh=rh&target=fqeZ4GFg"></script>
       </div>
       <p class="hint" style="margin-top: 0.75rem;">
-        <strong>Bildrechte:</strong> <a href="https://www.baden-airpark.de/" target="_blank"
-          style="color: inherit; text-decoration: underline;">Baden-Airpark GmbH</a>.
+        <strong>Quelle:</strong> <a href="https://metar-taf.com/de/metar/EDSB" target="_blank"
+          style="color: inherit; text-decoration: underline;">METAR-TAF.com (EDSB)</a>.
         <span style="display: block; margin-top: 0.25rem;">Die Einbindung erfolgt im Glauben an ein berechtigtes
           Interesse der Allgemeinheit (Sicherheit). Diese Darstellung dient ausschließlich der schnellen
           Information.</span>
-        <br>
-        <span style="font-size: 0.8em; opacity: 0.8;">Aktualisiert: <span id="weather-update-time">-</span></span>
       </p>
 
 
+    </div>
+
+    <div class="card">
+      <div class="card-title">Windfinder Vorhersage</div>
+      <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <script src="https://de.windfinder.com/widget/forecast/js/flughafen_karlsruhe_baden-baden?unit_wave=m&unit_rain=mm&unit_temperature=c&unit_wind=kts&unit_pressure=hPa&days=4&show_day=0"></script>
+        <noscript><a rel="nofollow"
+            href="https://www.windfinder.com/forecast/flughafen_karlsruhe_baden-baden?utm_source=forecast&utm_medium=web&utm_campaign=homepageweather&utm_content=noscript-Flughafen Karlsruhe-Baden">Wind
+            forecast for Flughafen Karlsruhe-Baden</a> provided by <a rel="nofollow"
+            href="https://www.windfinder.com?utm_source=forecast&utm_medium=web&utm_campaign=homepageweather&utm_content=noscript-logo">windfinder.com</a></noscript>
+      </div>
+      <p class="hint" style="margin-top: 0.75rem;">
+        <strong>Quelle:</strong> <a href="https://www.windfinder.com/forecast/flughafen_karlsruhe_baden-baden"
+          target="_blank" style="color: inherit; text-decoration: underline;">Windfinder</a>.
+      </p>
     </div>
 
     <div class="stats-grid">
@@ -424,51 +433,6 @@
           document.getElementById("flood-subtext").textContent = "Fehler beim Laden";
         });
     }
-
-    function loadWeatherImage() {
-      const workerUrl = "https://silent-night-c341.tristanteufel.workers.dev/";
-      const container = document.getElementById('weather-image-container');
-      const updateTimeElement = document.getElementById('weather-update-time');
-      const now = new Date();
-
-      if (updateTimeElement) {
-        updateTimeElement.textContent = now.toLocaleTimeString('de-DE', {
-          hour: '2-digit',
-          minute: '2-digit'
-        }) + ' Uhr';
-      }
-
-      const img = new Image();
-
-      img.onload = () => {
-        container.innerHTML = '';
-        img.style.maxWidth = '100%';
-        img.style.height = 'auto';
-        img.style.display = 'block';
-        img.style.borderRadius = '8px';
-        container.appendChild(img);
-      };
-
-      img.onerror = () => {
-        container.innerHTML = `
-          <div style="text-align: center; color: var(--text-muted); padding: 1rem;">
-            <p style="color: #ef4444; font-weight: 500; margin-bottom: 0.5rem;">Fehler beim Laden</p>
-            <button onclick="loadWeatherImage()" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
-              Erneut versuchen
-            </button>
-          </div>
-        `;
-      };
-
-      // Cache-Busting
-      img.src = workerUrl + "?t=" + now.getTime();
-    }
-
-    // Auto-Reload alle 5 Minuten
-    setInterval(loadWeatherImage, 5 * 60 * 1000);
-
-    // Initial laden
-    loadWeatherImage();
 
     fetchQualityTemperature();
     fetchWaterLevel();
