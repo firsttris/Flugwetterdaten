@@ -8,13 +8,11 @@ compatibility_date = "2025-06-01"
 [triggers]
 crons = ["*/30 * * * *"]
 
-# Speicher für die angemeldeten Geräte des Wind-Alarms.
-# Einmalig anlegen mit: npx wrangler kv namespace create SUBSCRIPTIONS
-# Danach die ausgegebene id eintragen und die drei Zeilen einkommentieren.
-# Solange sie auskommentiert sind, laufen METAR und TAF, nur der Wind-Alarm ist aus.
-# [[kv_namespaces]]
-# binding = "SUBSCRIPTIONS"
-# id = "HIER_DIE_ID_EINTRAGEN"
+# Speicher für die angemeldeten Geräte des Wind-Alarms
+# (angelegt mit: npx wrangler kv namespace create SUBSCRIPTIONS)
+[[kv_namespaces]]
+binding = "SUBSCRIPTIONS"
+id = "152d988578a54878aac286c24f62e29c"
 
 [vars]
 VAPID_SUBJECT = "https://wetter.teufel-it.de"

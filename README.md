@@ -69,14 +69,11 @@ Einmalig einrichten:
 
 Damit laufen METAR und TAF.
 
-**Wind-Alarm** zusätzlich einmalig:
+**Wind-Alarm** zusätzlich einmalig (der KV-Speicher `SUBSCRIPTIONS` ist schon angelegt und in `wrangler.toml` eingetragen):
 
 ```bash
 cd worker
 npm install
-
-# Speicher anlegen; die ausgegebene id in wrangler.toml eintragen und den Block einkommentieren
-npx wrangler kv namespace create SUBSCRIPTIONS
 
 # VAPID-Schlüssel erzeugen
 npm run vapid
