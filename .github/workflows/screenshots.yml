@@ -1,0 +1,18 @@
+name: Update screenshots
+
+# Nimmt die Bilder in docs/ (README, Doku, Social Preview) und public/screenshots/ (App-Manifest) mit
+# den Demo-Daten aus scripts/demo-data.mjs neu auf und committet die geänderten.
+# Nach einer sichtbaren Änderung von Hand starten.
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshots:
+    uses: firsttris/workflows/.github/workflows/screenshots.yml@v1
+    with:
+      command: npm run screenshots
+      paths: |
+        docs/*.png
+        public/screenshots
+    permissions:
+      contents: write

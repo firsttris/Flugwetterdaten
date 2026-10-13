@@ -1,0 +1,113 @@
+# Dokumentation als Website: https://wetter.teufel-it.de/docs/
+# Quelle ist docs/, gebaut mit MkDocs Material und zusammen mit der App veröffentlicht
+# (.github/workflows/deploy.yml baut nach dist/docs).
+# Lokal: pip install -r requirements-docs.txt && mkdocs serve
+site_name: Wetter NATO-Rampe
+site_description: >-
+  Wind, Vorhersage und Rhein-Pegel an der NATO-Rampe Rheinmünster, mit Wind-Alarm aufs Handy.
+  Anleitung, Datenquellen, Aufbau und Betrieb.
+site_url: https://wetter.teufel-it.de/docs/
+repo_url: https://github.com/firsttris/Flugwetterdaten
+repo_name: firsttris/Flugwetterdaten
+edit_uri: edit/main/docs/
+copyright: Lizenz MIT · © Tristan Teufel und Mitwirkende
+
+docs_dir: docs
+# Seiten als nutzung.html statt nutzung/: die relativen Bildpfade funktionieren dann auch auf GitHub
+use_directory_urls: false
+exclude_docs: |
+  social-preview.png
+
+nav:
+  - Übersicht: README.md
+  - Für Nutzer:
+      - Die App: nutzung.md
+      - Auf dem Handy installieren: installieren.md
+      - Wind-Alarm: wind-alarm.md
+      - Datenquellen und Berechnungen: datenquellen.md
+      - Häufige Fragen: faq.md
+  - Hintergrund:
+      - Aufbau: architektur.md
+      - Betrieb und Deployment: betrieb.md
+      - Entwicklung: entwicklung.md
+
+theme:
+  name: material
+  language: de
+  logo: assets/icon.svg
+  favicon: assets/icon.svg
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Dunkles Design
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Helles Design
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - toc.follow
+    - content.code.copy
+    - content.action.edit
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+plugins:
+  - search:
+      lang: de
+  - git-revision-date-localized:
+      type: date
+      locale: de
+      fallback_to_build_date: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  social:
+    - icon: material/weather-windy
+      link: https://wetter.teufel-it.de/
+      name: Zur App
+    - icon: fontawesome/brands/github
+      link: https://github.com/firsttris/Flugwetterdaten
+      name: Quellcode auf GitHub

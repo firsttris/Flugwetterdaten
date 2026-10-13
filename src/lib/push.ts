@@ -75,7 +75,7 @@ export async function showTestNotification(body: string): Promise<void> {
   const permission = await Notification.requestPermission();
   if (permission !== "granted") throw new Error("Benachrichtigungen wurden nicht erlaubt.");
   const reg = await navigator.serviceWorker.ready;
-  await reg.showNotification("Rheinmünster Wind", { body, icon: "/icon-192.png", badge: "/icon-192.png", tag: "wind-test" });
+  await reg.showNotification("Rheinmünster Wind", { body, icon: "/icons/icon-192.png", badge: "/icons/icon-192.png", tag: "wind-test" });
 }
 
 export function registerServiceWorker() {

@@ -19,12 +19,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # das Datum „Zuletzt geändert“ der Doku braucht den Verlauf
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
       - run: npm ci
       - run: npm run build
+      # Die Dokumentation liegt unter /docs/ neben der App
+      - run: pip install -r requirements-docs.txt
+      - run: mkdocs build --strict -d dist/docs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

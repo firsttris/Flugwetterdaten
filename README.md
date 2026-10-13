@@ -1,88 +1,163 @@
-# Flugwetterdaten
+<div align="center">
 
-![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-0F172A?style=flat-square&logo=tailwindcss&logoColor=38BDF8)
-![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=flat-square&logo=shadcnui&logoColor=white)
-![Cloudflare Workers](https://img.shields.io/badge/Cloudflare_Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+<img src="docs/assets/icon.svg" alt="Wetter Rampe Logo: Windlinien im Kompassring mit grünem Nord-Ost-Bereich" width="96">
 
-> Wind und Wasser an der NATO-Rampe Rheinmünster: aktueller Wind vom Baden-Airpark (METAR EDSB), Vorhersage, Rhein-Pegel und Wind-Alarm aufs Handy.
+<h1>Wetter NATO-Rampe Rheinmünster: Wind, Vorhersage und Rhein-Pegel</h1>
 
-**[wetter.teufel-it.de](https://wetter.teufel-it.de)**
+**Wind-App für Windsurfer und Kiter an der NATO-Rampe Rheinmünster am Rhein.**<br>
+Aktueller Wind vom Baden-Airpark (METAR EDSB), Vorhersage für 3 Tage, Wassertemperatur und Pegel auf einer Seite.<br>
+Kostenlos, ohne Werbung, als App aufs Handy, mit Wind-Alarm per Push-Nachricht.
 
-## Funktionen
+[![CI](https://github.com/firsttris/Flugwetterdaten/actions/workflows/ci.yml/badge.svg)](https://github.com/firsttris/Flugwetterdaten/actions/workflows/ci.yml)
+[![Deploy](https://github.com/firsttris/Flugwetterdaten/actions/workflows/deploy.yml/badge.svg)](https://github.com/firsttris/Flugwetterdaten/actions/workflows/deploy.yml)
+[![PWA](https://img.shields.io/badge/PWA-installierbar-0e7490?logo=pwa&logoColor=white)](https://wetter.teufel-it.de/docs/installieren.html)
+[![Docs](https://img.shields.io/badge/docs-wetter.teufel--it.de%2Fdocs-0e7490?logo=materialformkdocs&logoColor=white)](https://wetter.teufel-it.de/docs/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-- **Wind jetzt**: Windstärke, Böen und Richtung aus dem METAR, Windkompass, Verlauf der letzten 6 Stunden
-- **Vorhersage 3 Tage**: Stunde für Stunde aus dem DWD-Modell ICON (Open-Meteo)
-- **Rhein**: Wassertemperatur (LUBW), Pegel Iffezheim mit Trend, geschätzte Strömung, Hochwasserstatus (Pegelonline)
-- **Flugwetter**: Temperatur, QNH, Sicht, Wolken, Roh-METAR und TAF
-- **Wind-Alarm**: Push-Nachricht, wenn der Wind aus der richtigen Richtung kommt und stark genug ist, optional auch am Vorabend nach Vorhersage
-- **Einstellungen**: Windeinheit (kn, km/h, Bft), Hell/Dunkel, Alarm-Schwelle
-- Installierbar als App (PWA)
+### 👉 [wetter.teufel-it.de](https://wetter.teufel-it.de)
 
-Windrichtungen von 20° bis 80° werden grün markiert (`src/lib/config.ts` und `worker/src/index.ts`).
+[Öffnen](#-öffnen-und-installieren) •
+[Funktionen](#-funktionen) •
+[Screenshots](#-screenshots) •
+[Alternativen](#-alternativen) •
+[FAQ](#-faq) •
+[Dokumentation](https://wetter.teufel-it.de/docs/)
 
-## Aufbau
+<img src="docs/screenshot.png" alt="Wetter NATO-Rampe im dunklen Design: 17 Knoten Wind aus Nord-Ost mit Kompass, Windverlauf der letzten 6 Stunden und Windvorhersage für 3 Tage" width="900">
 
-| Teil | Technik | Ordner |
-|------|---------|--------|
-| Webseite | Vite, React, TypeScript, Tailwind CSS, shadcn/ui | `src/`, `public/` |
-| API & Wind-Alarm | Cloudflare Worker mit KV und Cron | `worker/` |
-| Deployment | GitHub Actions → GitHub Pages | `.github/workflows/` |
+</div>
 
-## Datenquellen
+## 💡 Warum?
 
-| Daten | Quelle | Abruf |
-|-------|--------|-------|
-| METAR / TAF EDSB | [aviationweather.gov](https://aviationweather.gov/data/api/) | über den Worker (kein CORS) |
-| Windvorhersage | [Open-Meteo](https://open-meteo.com/) (DWD ICON) | direkt |
-| Pegel, Abfluss, Hochwasser | [Pegelonline WSV](https://www.pegelonline.wsv.de/) | direkt |
-| Wassertemperatur | [LUBW NIZ](https://niz.baden-wuerttemberg.de) | direkt |
+Wer an der Rampe aufs Wasser will, hatte bisher fünf Tabs offen: METAR vom Flughafen, Windfinder,
+Pegel, Wassertemperatur, Hochwasser. Diese App zeigt das alles auf einer Seite, auf das Wesentliche
+reduziert.
 
-## Lokale Entwicklung
+- **Auf einen Blick**: Windstärke, Böen und Richtung groß oben, die beste Windrichtung grün markiert.
+- **Lohnt sich morgen?**: Vorhersage für 3 Tage, Stunde für Stunde, in den gewohnten Windfinder-Farben.
+- **Nichts verpassen**: Der Wind-Alarm meldet sich, wenn der Wind passt.
+- **Wie eine App**: aufs Handy installierbar, startet ohne Browserleiste, hell und dunkel.
+
+Läuft auf Android, iPhone, iPad und im Browser am Rechner.
+
+## 🚀 Öffnen und installieren
+
+**[wetter.teufel-it.de](https://wetter.teufel-it.de)** im Browser öffnen, fertig.
+
+Als App auf den Startbildschirm: auf Android im Chrome-Menü **App installieren**, auf dem iPhone in
+Safari **Teilen → Zum Home-Bildschirm**. Mehr in der
+[Installationsanleitung](https://wetter.teufel-it.de/docs/installieren.html).
+
+## ✨ Funktionen
+
+### 🌬️ Wind
+
+- **Wind jetzt**: Mittelwind, Böen und Richtung aus dem METAR des Baden-Airparks (EDSB), alle 5 Minuten neu.
+- **Kompass**: Nadel in Windrichtung, Nord-Ost (20–80°) grün markiert, Fächer für die Schwankung der letzten Stunde.
+- **Windverlauf**: die letzten 6 Stunden mit Mittelwind, Böen und Richtung.
+- **Einheiten**: Knoten, km/h oder Beaufort.
+
+### 📅 Vorhersage
+
+- **3 Tage, Stunde für Stunde** von 6 bis 21 Uhr, aus dem DWD-Modell ICON.
+- **Windfinder-Farben** für die Windstärke, Böen als Strich, Nord-Ost-Stunden grün.
+- **TAF**: die offizielle Flughafen-Vorhersage, in normale Sprache übersetzt.
+
+### 🌊 Rhein
+
+- **Wassertemperatur** von der LUBW.
+- **Pegel Iffezheim** mit Trend (steigend, fallend, stabil).
+- **Strömung**, geschätzt aus dem Abfluss.
+- **Hochwasserstatus** von Pegelonline.
+
+### 🔔 Wind-Alarm
+
+- **Push-Nachricht**, wenn der Wind aus Nord-Ost kommt und stark genug ist.
+- **Einstellbar**: Mindestwind, nur tagsüber, höchstens 1× am Tag oder alle 3 Stunden.
+- **Vorhersage-Alarm** am Vorabend, wenn morgen Wind angesagt ist.
+
+### ✈️ Flugwetter
+
+- **QNH, Sicht, Wolken, Temperatur, Taupunkt**, Sonnenauf- und -untergang, Roh-METAR.
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><img src="docs/screenshot-phone.png" alt="Handy, helles Design: 17 Knoten, Böen 24, Wind aus 050 Grad, Kompass mit grüner Nadel"></td>
+    <td><img src="docs/screenshot-phone-dark.png" alt="Handy, dunkles Design: Wind jetzt mit Windlinien und Kompass"></td>
+    <td><img src="docs/screenshot-settings.png" alt="Einstellungen: Wind-Alarm mit Mindestwind, Windeinheit, Design"></td>
+  </tr>
+</table>
+
+<img src="docs/screenshot-forecast.png" alt="Vorhersage für 3 Tage: Balken in Windfinder-Farben, Pfeile für die Windrichtung, Nord-Ost grün">
+
+## 🔀 Alternativen
+
+Gemacht für genau einen Spot: alles, was man für die Rampe braucht, und nichts sonst.
+
+| | Was es ist | Was hier anders ist |
+|---|---|---|
+| [Windfinder](https://www.windfinder.com/forecast/flughafen_karlsruhe_baden-baden) | Vorhersage und Messwerte weltweit | Pegel, Wassertemperatur und Wind-Alarm für die Rampe auf derselben Seite |
+| [Windy](https://www.windy.com/) | Wetterkarten mit vielen Modellen | keine Karte, nur der Spot; schneller am Handy |
+| [metar-taf.com](https://metar-taf.com/de/metar/EDSB) | METAR und TAF für Piloten | für Wassersportler aufbereitet, mit Verlauf und Vorhersage |
+| [Pegelonline](https://www.pegelonline.wsv.de/), [HVZ](https://www.hvz.baden-wuerttemberg.de/) | amtliche Pegel | Pegel, Trend und Hochwasser neben dem Wind |
+
+## ❓ FAQ
+
+### Was kostet die App?
+Nichts. Privates Projekt, keine Werbung, kein Tracking.
+
+### Gibt es den Wind-Alarm auch auf dem iPhone?
+Ja, ab iOS 16.4, aus der installierten App heraus. [Anleitung](https://wetter.teufel-it.de/docs/wind-alarm.html)
+
+### Warum weicht der Wind am Spot von der App ab?
+Gemessen wird am Flughafen, einige Kilometer entfernt. Mehr unter [Datenquellen](https://wetter.teufel-it.de/docs/datenquellen.html).
+
+### Kann ich das für meinen eigenen Spot nutzen?
+Ja, der Code ist MIT-lizenziert; Flughafen, Position und Windbereich sind ein paar Konstanten. [So geht's](https://wetter.teufel-it.de/docs/entwicklung.html#einen-anderen-spot-einstellen)
+
+## 📚 Dokumentation
+
+Die vollständige Dokumentation mit Suche: **[wetter.teufel-it.de/docs](https://wetter.teufel-it.de/docs/)**
+
+| | |
+|---|---|
+| [Die App](https://wetter.teufel-it.de/docs/nutzung.html) | was jede Karte zeigt und wie man sie liest |
+| [Installieren](https://wetter.teufel-it.de/docs/installieren.html) | Android, iPhone, Rechner |
+| [Wind-Alarm](https://wetter.teufel-it.de/docs/wind-alarm.html) | einschalten, Regeln, Fehlersuche |
+| [Datenquellen](https://wetter.teufel-it.de/docs/datenquellen.html) | woher jeder Wert kommt, was geschätzt ist |
+| [Aufbau](https://wetter.teufel-it.de/docs/architektur.html) | Webseite, Cloudflare Worker, Push |
+| [Betrieb](https://wetter.teufel-it.de/docs/betrieb.html) | Deployment, Secrets, Domain |
+| [Entwicklung](https://wetter.teufel-it.de/docs/entwicklung.html) | lokal starten, Struktur, Checks |
+
+## 🛠️ Entwicklung
+
+Voraussetzung: Node.js 22.
 
 ```bash
+git clone https://github.com/firsttris/Flugwetterdaten && cd Flugwetterdaten
 npm install
 npm run dev
 ```
 
-Standardmäßig spricht die Seite den produktiven Worker an. Für einen lokalen Worker `VITE_API_BASE=http://localhost:8787 npm run dev`.
+Vite, React, TypeScript, Tailwind CSS und shadcn/ui; ein Cloudflare Worker für METAR/TAF und den
+Wind-Alarm. Details: [Entwicklung](https://wetter.teufel-it.de/docs/entwicklung.html).
 
-## Deployment
+## 🤝 Mitmachen
 
-### Webseite
+Issues und Pull Requests sind willkommen. Bei einem Fehler hilft: Gerät, Browser, Uhrzeit und ein
+Screenshot. Vor einem Pull Request bitte `npm run build` und `mkdocs build --strict` laufen lassen.
 
-Jeder Push auf `main` baut die Seite und veröffentlicht sie auf GitHub Pages.
-Einmalig nötig: unter **Settings → Pages → Build and deployment → Source** „GitHub Actions“ auswählen.
+---
 
-### Worker
+<div align="center">
 
-Jeder Push auf `main`, der etwas in `worker/` ändert, lädt den Worker automatisch zu Cloudflare hoch (`.github/workflows/deploy-worker.yml`). Von Hand starten geht unter **Actions → Deploy Cloudflare Worker → Run workflow**.
+⭐ Gefällt dir die App? Ein [Stern auf GitHub](https://github.com/firsttris/Flugwetterdaten) hilft anderen, sie zu finden.<br>
+🐛 [Fehler melden](https://github.com/firsttris/Flugwetterdaten/issues/new) · 💡 [Idee vorschlagen](https://github.com/firsttris/Flugwetterdaten/issues/new)
 
-Einmalig einrichten:
+<sub>Lizenz: <a href="LICENSE">MIT</a> · © Tristan Teufel und Mitwirkende<br>
+Alle Daten dienen nur der Orientierung und ersetzen keine offizielle Flugwetterberatung oder Gefahrenprüfung.<br>
+Keine Verbindung zum Flughafen Karlsruhe/Baden-Baden, zu Windfinder, zum DWD, zur WSV oder zur LUBW.</sub>
 
-1. **API-Token** bei Cloudflare unter *My Profile → API Tokens* mit der Vorlage „Edit Cloudflare Workers“ erstellen.
-2. **GitHub Secrets** unter *Settings → Secrets and variables → Actions* anlegen:
-   - `CLOUDFLARE_API_TOKEN`
-   - `CLOUDFLARE_ACCOUNT_ID` (Cloudflare-Dashboard, Übersicht rechts)
-   - `VAPID_PRIVATE_KEY` (nur für den Wind-Alarm, siehe unten)
-
-Damit laufen METAR und TAF.
-
-**Wind-Alarm** zusätzlich einmalig (der KV-Speicher `SUBSCRIPTIONS` ist schon angelegt und in `wrangler.toml` eingetragen):
-
-```bash
-cd worker
-npm install
-
-# VAPID-Schlüssel erzeugen
-npm run vapid
-```
-
-Den öffentlichen Schlüssel in `wrangler.toml` bei `VAPID_PUBLIC_KEY` eintragen und den privaten Schlüssel als GitHub Secret `VAPID_PRIVATE_KEY` speichern. Beim nächsten Deploy setzt der Workflow ihn als Worker-Secret.
-
-Der Worker heißt in `wrangler.toml` wie der bisherige (`silent-night-c341`), damit die URL gleich bleibt.
-
-## Lizenz
-
-MIT
+</div>
