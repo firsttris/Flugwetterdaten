@@ -1,19 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible } from "@/components/ui/collapsible";
 
+// Andere Vorhersagemodelle zum Vergleichen; die übrigen Daten stehen direkt auf der Seite
 const LINKS = [
   ["Windfinder Superforecast", "https://de.windfinder.com/weatherforecast/flughafen_karlsruhe_baden-baden"],
   ["Meteociel Lauterbourg", "https://www-meteociel-com.translate.goog/previsions/24854/lauterbourg.htm?_x_tr_sl=fr&_x_tr_tl=de&_x_tr_hl=de&_x_tr_pto=wapp"],
-  ["ELWIS Iffezheim", "https://www.elwis.de/DE/dynamisch/Wasserstaende/Pegeleinzeln%3AIFFEZHEIM"],
-  ["HVZ Pegel Iffezheim", "https://www.hvz.baden-wuerttemberg.de/pegel.html?id=09137"],
-  ["LUBW Wassertemperatur", "https://niz.baden-wuerttemberg.de/oberflaechengewaesser/gueteparameter?view=0&id=2838"],
 ];
 
 export function LinksCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Links</CardTitle>
+        <CardTitle>Zweite Meinung</CardTitle>
+        <CardDescription>andere Vorhersagemodelle</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-wrap gap-2">
         {LINKS.map(([label, href]) => (
