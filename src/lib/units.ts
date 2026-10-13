@@ -44,3 +44,17 @@ export function minutesAgo(date: Date, now = Date.now()): string {
 
 export const formatNumber = (n: number, digits = 0) =>
   n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+
+/**
+ * Windfinder-Farbskala (Klassen ws0–ws20 aus deren Stylesheet, je 2 Knoten).
+ * Ab 40 kn bleibt es bei der letzten Farbe.
+ */
+const WIND_COLORS = [
+  "#9700ff", "#6400ff", "#3200ff", "#0032ff", "#0064ff", "#0096ff", "#00c7ff",
+  "#00e6f0", "#25c192", "#11d411", "#00e600", "#00fa00", "#b8ff61", "#fffe00",
+  "#ffe100", "#ffc800", "#ffaf00", "#ff9600", "#e67d00", "#e66400", "#dc4a1d",
+];
+
+export function windColor(kn: number): string {
+  return WIND_COLORS[Math.min(WIND_COLORS.length - 1, Math.max(0, Math.floor(kn / 2)))];
+}

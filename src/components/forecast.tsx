@@ -3,7 +3,7 @@ import { DirArrow } from "@/components/compass";
 import { ErrorNote, Skeleton } from "@/components/status";
 import type { Forecast as ForecastData } from "@/lib/api";
 import { isGreen } from "@/lib/config";
-import { convertWind, formatTime, pad3, TZ, UNIT_LONG, UNIT_SHORT, type WindUnit } from "@/lib/units";
+import { convertWind, formatTime, pad3, TZ, UNIT_LONG, UNIT_SHORT, windColor, type WindUnit } from "@/lib/units";
 import { cn } from "@/lib/utils";
 
 const FIRST_HOUR = 6;
@@ -52,8 +52,8 @@ export function Forecast({ data, error, unit, now }: { data: ForecastData | null
                         </span>
                         <div className="relative flex w-full max-w-[18px] items-end" style={{ height: BAR_PX }}>
                           <b
-                            className={cn("block w-full rounded-t-[3px] rounded-b-[1px]", green ? "bg-good" : "bg-bar")}
-                            style={{ height: (Math.min(h.speed, BAR_MAX) / BAR_MAX) * BAR_PX }}
+                            className="block w-full rounded-t-[3px] rounded-b-[1px] dark:brightness-[.8]"
+                            style={{ height: (Math.min(h.speed, BAR_MAX) / BAR_MAX) * BAR_PX, backgroundColor: windColor(h.speed) }}
                           />
                           <i
                             className="absolute right-[15%] left-[15%] h-0.5 rounded-sm bg-muted-foreground opacity-60"
@@ -75,8 +75,29 @@ export function Forecast({ data, error, unit, now }: { data: ForecastData | null
         ) : (
           <Skeleton className="h-56 w-full" />
         )}
-        <p className="text-xs text-muted-foreground">DWD ICON über Open-Meteo · Balken: Mittelwind, Strich: Böen</p>
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-xs text-muted-foreground">
+          <p>DWD ICON über Open-Meteo · Balken: Mittelwind, Strich: Böen</p>
+          <WindScale unit={unit} />
+        </div>
       </CardContent>
     </Card>
+  );
+}
+
+/** Legende der Windfinder-Farben (0–40 kn). */
+function WindScale({ unit }: { unit: WindUnit }) {
+  return (
+    <div className="flex w-full max-w-60 flex-col gap-1" aria-hidden="true">
+      <div className="flex h-1.5 overflow-hidden rounded-full dark:brightness-[.8]">
+        {Array.from({ length: 21 }, (_, i) => (
+          <span key={i} className="flex-1" style={{ backgroundColor: windColor(i * 2) }} />
+        ))}
+      </div>
+      <div className="flex justify-between text-[10px] tabular-nums">
+        {[0, 10, 20, 30, 40].map((kn) => (
+          <span key={kn}>{convertWind(kn, unit)}{kn === 40 ? ` ${UNIT_SHORT[unit]}` : ""}</span>
+        ))}
+      </div>
+    </div>
   );
 }
