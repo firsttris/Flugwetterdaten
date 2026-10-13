@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "vapid": "node worker/scripts/vapid.mjs"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
