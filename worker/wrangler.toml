@@ -18,4 +18,4 @@ id = "152d988578a54878aac286c24f62e29c"
 VAPID_SUBJECT = "https://wetter.teufel-it.de"
 # Öffentlicher VAPID-Schlüssel (npm run vapid). Der private Schlüssel ist ein Secret:
 #   npx wrangler secret put VAPID_PRIVATE_KEY
-VAPID_PUBLIC_KEY = ""
+VAPID_PUBLIC_KEY = "BCkqxzbX4ccXmasdQvajEETbcfs59tucanAZMJ0Xsuiz0JUVuaD71wiLXOG0kDqrBZeHsQq6LKbvLNxNLQguWBc"
