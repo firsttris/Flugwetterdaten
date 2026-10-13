@@ -57,25 +57,34 @@ Einmalig nötig: unter **Settings → Pages → Build and deployment → Source*
 
 ### Worker
 
+Jeder Push auf `main`, der etwas in `worker/` ändert, lädt den Worker automatisch zu Cloudflare hoch (`.github/workflows/deploy-worker.yml`). Von Hand starten geht unter **Actions → Deploy Cloudflare Worker → Run workflow**.
+
+Einmalig einrichten:
+
+1. **API-Token** bei Cloudflare unter *My Profile → API Tokens* mit der Vorlage „Edit Cloudflare Workers“ erstellen.
+2. **GitHub Secrets** unter *Settings → Secrets and variables → Actions* anlegen:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID` (Cloudflare-Dashboard, Übersicht rechts)
+   - `VAPID_PRIVATE_KEY` (nur für den Wind-Alarm, siehe unten)
+
+Damit laufen METAR und TAF.
+
+**Wind-Alarm** zusätzlich einmalig:
+
 ```bash
 cd worker
 npm install
 
-# 1. Speicher für den Wind-Alarm anlegen, die ausgegebene id in wrangler.toml eintragen
+# Speicher anlegen; die ausgegebene id in wrangler.toml eintragen und den Block einkommentieren
 npx wrangler kv namespace create SUBSCRIPTIONS
 
-# 2. VAPID-Schlüssel erzeugen
+# VAPID-Schlüssel erzeugen
 npm run vapid
-#    öffentlichen Schlüssel in wrangler.toml bei VAPID_PUBLIC_KEY eintragen,
-#    privaten Schlüssel als Secret speichern:
-npx wrangler secret put VAPID_PRIVATE_KEY
-
-# 3. Hochladen
-npm run deploy
 ```
 
+Den öffentlichen Schlüssel in `wrangler.toml` bei `VAPID_PUBLIC_KEY` eintragen und den privaten Schlüssel als GitHub Secret `VAPID_PRIVATE_KEY` speichern. Beim nächsten Deploy setzt der Workflow ihn als Worker-Secret.
+
 Der Worker heißt in `wrangler.toml` wie der bisherige (`silent-night-c341`), damit die URL gleich bleibt.
-Ohne KV und Schlüssel funktionieren METAR und TAF trotzdem, nur der Wind-Alarm ist dann aus.
 
 ## Lizenz
 

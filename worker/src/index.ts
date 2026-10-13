@@ -12,7 +12,7 @@
 import { sendPush } from "./push";
 
 export interface Env {
-  SUBSCRIPTIONS: KVNamespace;
+  SUBSCRIPTIONS: KVNamespace; // fehlt, solange der Wind-Alarm nicht eingerichtet ist
   VAPID_PUBLIC_KEY: string;
   VAPID_PRIVATE_KEY: string; // JWK als JSON (Secret)
   VAPID_SUBJECT: string;
@@ -148,7 +148,7 @@ async function unsubscribe(request: Request, env: Env) {
 
 async function message(url: URL, env: Env) {
   const endpoint = url.searchParams.get("endpoint");
-  const sub = endpoint ? await env.SUBSCRIPTIONS.get<Subscription>(await subKey(endpoint), "json") : null;
+  const sub = endpoint && env.SUBSCRIPTIONS ? await env.SUBSCRIPTIONS.get<Subscription>(await subKey(endpoint), "json") : null;
   return json(sub?.message ?? { title: "Rheinmünster Wind", body: "Neue Windmeldung – App öffnen für Details." });
 }
 
