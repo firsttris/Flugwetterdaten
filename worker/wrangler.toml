@@ -1,0 +1,23 @@
+# Bestehender Worker – der Name muss zum Worker im Cloudflare-Konto passen,
+# damit die URL (silent-night-c341.<konto>.workers.dev) gleich bleibt.
+name = "silent-night-c341"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+
+# Alle 30 Minuten neuen METAR prüfen und ggf. Wind-Alarm schicken
+[triggers]
+crons = ["*/30 * * * *"]
+
+# Speicher für die angemeldeten Geräte des Wind-Alarms.
+# Einmalig anlegen mit: npx wrangler kv namespace create SUBSCRIPTIONS
+# Danach die ausgegebene id eintragen und die drei Zeilen einkommentieren.
+# Solange sie auskommentiert sind, laufen METAR und TAF, nur der Wind-Alarm ist aus.
+# [[kv_namespaces]]
+# binding = "SUBSCRIPTIONS"
+# id = "HIER_DIE_ID_EINTRAGEN"
+
+[vars]
+VAPID_SUBJECT = "https://wetter.teufel-it.de"
+# Öffentlicher VAPID-Schlüssel (npm run vapid). Der private Schlüssel ist ein Secret:
+#   npx wrangler secret put VAPID_PRIVATE_KEY
+VAPID_PUBLIC_KEY = ""
