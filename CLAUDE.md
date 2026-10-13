@@ -40,8 +40,6 @@ mkdocs build --strict                # wenn docs/ oder mkdocs.yml geändert wurd
 - Sprache: Oberfläche, Doku, Commits und Pull Requests auf Deutsch; Code-Bezeichner auf Englisch.
 - Die App gibt keine Bewertung wie „gut“ oder „schlecht“ ab und schreibt nirgends Spot-Wissen
   (etwa „Düse“) hin. Nord-Ost (20–80°) wird nur farblich grün markiert.
-- Zielgruppe sind Windsurfer, Wingfoiler und Parawinger. Kiten ist an der Rampe verboten: Kiter,
-  Kitesurfen oder `kitesurfing` dürfen nirgends stehen (App, README, Doku, Topics).
 
 ## Code-Stil
 
