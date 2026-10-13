@@ -16,7 +16,7 @@ export function WindStreaks({ dir, speed, calm }: { dir: number; speed: number; 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx || reduced) return;
+    if (!canvas || !ctx) return;
 
     let w = 0, h = 0, parts: Particle[] = [];
     const spawn = (anywhere: boolean): Particle => ({
@@ -44,9 +44,14 @@ export function WindStreaks({ dir, speed, calm }: { dir: number; speed: number; 
     let last = performance.now();
     let frame = 0;
     const draw = (now: number) => {
-      const dt = Math.min(0.05, (now - last) / 1000);
+      // Bei „Bewegung reduzieren“ ein ruhendes Bild, sonst bewegte Linien
+      const dt = reduced ? 0 : Math.min(0.05, (now - last) / 1000);
       last = now;
       const t = target.current;
+      if (reduced) {
+        state.angle = t.dir;
+        state.speed = t.speed;
+      }
       // Richtung und Stärke weich nachführen
       state.angle += ((((t.dir - state.angle) % 360) + 540) % 360 - 180) * Math.min(1, dt * 2.5);
       state.speed += (t.speed - state.speed) * Math.min(1, dt * 2);
@@ -64,7 +69,7 @@ export function WindStreaks({ dir, speed, calm }: { dir: number; speed: number; 
         p.x += dx * pxPerSec * p.v * dt;
         p.y += dy * pxPerSec * p.v * dt;
         if (p.life >= 1 || p.x < -80 || p.x > w + 80 || p.y < -80 || p.y > h + 80) Object.assign(p, spawn(false));
-        const alpha = Math.sin(Math.PI * Math.min(1, p.life)) * (t.calm ? 0.14 : 0.55);
+        const alpha = (reduced ? 0.6 : Math.sin(Math.PI * Math.min(1, p.life))) * (t.calm ? 0.14 : 0.55);
         const len = p.len * (t.calm ? 0.25 : 0.5 + Math.min(1, state.speed / 20));
         const tx = p.x - dx * len, ty = p.y - dy * len;
         const g = ctx.createLinearGradient(p.x, p.y, tx, ty);
@@ -76,11 +81,14 @@ export function WindStreaks({ dir, speed, calm }: { dir: number; speed: number; 
         ctx.lineTo(tx, ty);
         ctx.stroke();
       }
-      frame = requestAnimationFrame(draw);
+      if (!reduced) frame = requestAnimationFrame(draw);
     };
     frame = requestAnimationFrame(draw);
+    // Ruhendes Bild bei neuen Werten oder geänderter Größe neu zeichnen
+    const redraw = reduced ? setInterval(() => requestAnimationFrame(draw), 1000) : 0;
     return () => {
       cancelAnimationFrame(frame);
+      clearInterval(redraw);
       observer.disconnect();
     };
   }, [reduced]);

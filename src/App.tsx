@@ -70,7 +70,10 @@ export default function App() {
       <LinksCard />
 
       <footer className="text-center text-xs text-muted-foreground">
-        Daten: aviationweather.gov · Open-Meteo · LUBW · Pegelonline WSV ·{" "}
+        <a className="underline" href="/docs/">
+          Anleitung
+        </a>{" "}
+        · Daten: aviationweather.gov · Open-Meteo · LUBW · Pegelonline WSV ·{" "}
         <a className="underline" href="https://github.com/firsttris/Flugwetterdaten" target="_blank" rel="noopener noreferrer">
           Quellcode auf GitHub
         </a>

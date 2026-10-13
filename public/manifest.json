@@ -1,26 +1,38 @@
 {
-  "name": "Wetterinformationen NATO Rampe",
+  "id": "/",
+  "name": "Wetter NATO-Rampe Rheinmünster",
   "short_name": "Wetter Rampe",
-  "start_url": "/",
+  "description": "Wind, Vorhersage und Rhein-Pegel an der NATO-Rampe Rheinmünster, mit Wind-Alarm aufs Handy.",
+  "lang": "de",
+  "dir": "ltr",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
-  "orientation": "portrait",
+  "theme_color": "#0e7490",
+  "categories": ["weather", "sports"],
   "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "screenshots": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "/screenshots/phone.png",
+      "sizes": "780x1688",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Wind jetzt mit Kompass und Windverlauf"
     },
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "/screenshots/desktop.png",
+      "sizes": "1920x1200",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Wind, Vorhersage für 3 Tage und Rhein-Pegel"
     }
   ]
 }

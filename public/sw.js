@@ -36,8 +36,8 @@ self.addEventListener("push", (event) => {
       }
       await self.registration.showNotification(message.title, {
         body: message.body,
-        icon: "/icon-192.png",
-        badge: "/icon-192.png",
+        icon: "/icons/icon-192.png",
+        badge: "/icons/icon-192.png",
         tag: "wind",
         renotify: true,
       });

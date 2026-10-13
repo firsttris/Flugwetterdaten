@@ -1,0 +1,23 @@
+/* Farben der App (src/index.css: --water) */
+:root {
+  --md-primary-fg-color: #0e7490;
+  --md-primary-fg-color--light: #22b8d6;
+  --md-primary-fg-color--dark: #0b3b52;
+  --md-accent-fg-color: #16a34a;
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #0b3b52;
+  --md-accent-fg-color: #4ade80;
+  --md-typeset-a-color: #22b8d6;
+}
+/* Screenshots: abgerundet mit Schatten, nie breiter als der Text */
+.md-typeset img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+}
+/* Logo ohne Schatten */
+.md-typeset img[src$=".svg"] {
+  box-shadow: none;
+}
