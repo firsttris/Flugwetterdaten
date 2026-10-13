@@ -4,7 +4,7 @@
 
 <h1>Wetter NATO-Rampe Rheinmünster: Wind, Vorhersage und Rhein-Pegel</h1>
 
-**Wind-App für Windsurfer und Kiter an der NATO-Rampe Rheinmünster am Rhein.**<br>
+**Wind-App für Windsurfer, Wingfoiler und Parawinger an der NATO-Rampe Rheinmünster am Rhein.**<br>
 Aktueller Wind vom Baden-Airpark (METAR EDSB), Vorhersage für 3 Tage, Wassertemperatur und Pegel auf einer Seite.<br>
 Kostenlos, ohne Werbung, als App aufs Handy, mit Wind-Alarm per Push-Nachricht.
 

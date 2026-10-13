@@ -60,5 +60,5 @@ die Bilder mit festen Demo-Daten auf und committet nur die geänderten.
 |---|---|
 | Description | Wind, Vorhersage und Rhein-Pegel an der NATO-Rampe Rheinmünster, mit Wind-Alarm aufs Handy |
 | Website | `https://wetter.teufel-it.de` |
-| Topics | `pwa`, `react`, `tailwindcss`, `shadcn-ui`, `cloudflare-workers`, `web-push`, `metar`, `taf`, `wind`, `windsurfing`, `kitesurfing`, `weather`, `rhein`, `pegel`, `open-meteo` |
+| Topics | `pwa`, `react`, `tailwindcss`, `shadcn-ui`, `cloudflare-workers`, `web-push`, `metar`, `taf`, `wind`, `windsurfing`, `wingfoil`, `parawing`, `weather`, `rhein`, `pegel`, `open-meteo` |
 | Social preview | `docs/social-preview.png` |
