@@ -4,7 +4,7 @@
 |---|---|---|
 | Wind jetzt, Windverlauf, Flugwetter | METAR EDSB (Baden-Airpark) von [aviationweather.gov](https://aviationweather.gov/data/api/) | alle 5 Minuten |
 | TAF | [aviationweather.gov](https://aviationweather.gov/data/api/) | alle 30 Minuten |
-| Vorhersage 3 Tage, Sonnenauf- und -untergang | [Open-Meteo](https://open-meteo.com/), Modell ICON des DWD | alle 30 Minuten |
+| Vorhersage 5 Tage, Sonnenauf- und -untergang | [Open-Meteo](https://open-meteo.com/), Modell ICON des DWD | alle 30 Minuten |
 | Pegel, Abfluss, Hochwasser | [Pegelonline](https://www.pegelonline.wsv.de/) (WSV), Pegel Iffezheim | alle 5 Minuten |
 | Wassertemperatur | [LUBW](https://niz.baden-wuerttemberg.de), Messstelle 2838 | alle 30 Minuten |
 
@@ -24,7 +24,8 @@ sein als gemessen.
 ## Vorhersage
 
 Die Vorhersage kommt vom Modell **ICON** des Deutschen Wetterdienstes über Open-Meteo
-(`icon_seamless`: für die ersten zwei Tage das feine ICON-D2 mit 2 km Raster, danach ICON-EU), für
+(`icon_seamless`: für die ersten zwei Tage das feine ICON-D2 mit 2 km Raster, für Tag 3 bis 5
+ICON-EU mit 7 km Raster), für
 den Punkt 48,78° N / 8,05° O am Rhein. Es ist eine Modellrechnung, keine Messung; zum Vergleich gibt
 es in der App die Links unter „Zweite Meinung“.
 

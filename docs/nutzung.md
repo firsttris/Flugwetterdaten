@@ -33,9 +33,9 @@ Mittelwind als Fläche, Böen gestrichelt, darüber kleine Pfeile für die Richt
 Kompassnadel, wohin der Wind weht. Grüne Pfeile bedeuten Nord-Ost. So sieht man, ob der Wind
 gerade zunimmt, nachlässt oder dreht.
 
-## Vorhersage 3 Tage
+## Vorhersage 5 Tage
 
-<img src="screenshot-forecast.png" alt="Vorhersage für drei Tage, Stunde für Stunde von 6 bis 21 Uhr, Balken in den Windfinder-Farben">
+<img src="screenshot-forecast.png" alt="Vorhersage für fünf Tage, Stunde für Stunde von 6 bis 21 Uhr, Balken in den Windfinder-Farben">
 
 Eine Zeile pro Tag, eine Spalte pro Stunde von 6 bis 21 Uhr:
 

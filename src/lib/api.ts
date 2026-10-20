@@ -67,7 +67,7 @@ export async function fetchForecast(): Promise<Forecast> {
     daily: "sunrise,sunset",
     wind_speed_unit: "kn",
     models: "icon_seamless",
-    forecast_days: "3",
+    forecast_days: "5",
     timezone: TZ,
     timeformat: "unixtime",
   });

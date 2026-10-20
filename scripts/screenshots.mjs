@@ -43,7 +43,7 @@ async function open({ width, height, scale = 2, dark = false, settings = {} }) {
   const page = await ctx.newPage()
   await page.clock.setFixedTime(NOW)
   await page.goto(BASE)
-  await page.getByText('Vorhersage 3 Tage').waitFor()
+  await page.getByText('Vorhersage 5 Tage').waitFor()
   await page.locator('text=Böen').first().waitFor()
   await page.waitForTimeout(1500)
   return page
@@ -58,7 +58,7 @@ const shot = async (page, path, opts = {}) => {
 let p = await open({ width: 1280, height: 800, scale: 1.5, dark: true })
 await shot(p, 'docs/screenshot.png', { fullPage: true })
 await shot(p, 'public/screenshots/desktop.png')
-await shot(p, 'docs/screenshot-forecast.png', { fullPage: true, clip: await box(p, 'Vorhersage 3 Tage') })
+await shot(p, 'docs/screenshot-forecast.png', { fullPage: true, clip: await box(p, 'Vorhersage 5 Tage') })
 await p.getByText('Vorhersage (TAF)').click()
 await p.waitForTimeout(300)
 await shot(p, 'docs/screenshot-flight.png', { fullPage: true, clip: await box(p, 'Flugwetter EDSB') })

@@ -45,13 +45,15 @@ export const taf = [
   },
 ]
 
-// --- Open-Meteo: 3 Tage, ab Mitternacht deutscher Zeit (UTC+2 im Sommer)
+// --- Open-Meteo: 5 Tage, ab Mitternacht deutscher Zeit (UTC+2 im Sommer)
 const day0 = Math.floor(Date.parse('2026-06-14T00:00:00+02:00') / 1000)
 const bell = (h, peak, top, base, w) => base + (top - base) * Math.exp(-((h - peak) ** 2) / (2 * w * w))
 const days = [
   (h) => [h < 19 ? 45 + ((h * 7) % 20) : 90, h < 19 ? bell(h, 15, 18, 6, 3.5) : 8 - (h - 19) * 0.6],
   (h) => [220 + ((h * 5) % 20), bell(h, 14, 13, 4, 3)],
   (h) => (h < 12 ? [(350 + h * 3) % 360, 7 + (h % 3)] : [30 + ((h * 4) % 20), bell(h, 16, 24, 10, 3)]),
+  (h) => [260 + ((h * 3) % 30), bell(h, 15, 16, 5, 4)],
+  (h) => [60 + ((h * 5) % 25), bell(h, 13, 11, 3, 3.5)],
 ]
 const hourly = { time: [], wind_speed_10m: [], wind_gusts_10m: [], wind_direction_10m: [] }
 days.forEach((f, d) => {
@@ -66,9 +68,9 @@ days.forEach((f, d) => {
 export const forecast = {
   hourly,
   daily: {
-    time: [0, 1, 2].map((d) => day0 + d * 86400),
-    sunrise: [0, 1, 2].map((d) => day0 + d * 86400 + 5 * 3600 + 18 * 60),
-    sunset: [0, 1, 2].map((d) => day0 + d * 86400 + 21 * 3600 + 32 * 60),
+    time: days.map((_, d) => day0 + d * 86400),
+    sunrise: days.map((_, d) => day0 + d * 86400 + 5 * 3600 + 18 * 60),
+    sunset: days.map((_, d) => day0 + d * 86400 + 21 * 3600 + 32 * 60),
   },
 }
 

@@ -5,7 +5,7 @@
 <h1>Wetter NATO-Rampe Rheinmünster: Wind, Vorhersage und Rhein-Pegel</h1>
 
 **Wind-App für Windsurfer, Wingfoiler und Parawinger an der NATO-Rampe Rheinmünster am Rhein.**<br>
-Aktueller Wind vom Baden-Airpark (METAR EDSB), Vorhersage für 3 Tage, Wassertemperatur und Pegel auf einer Seite.<br>
+Aktueller Wind vom Baden-Airpark (METAR EDSB), Vorhersage für 5 Tage, Wassertemperatur und Pegel auf einer Seite.<br>
 Kostenlos, ohne Werbung, als App aufs Handy, mit Wind-Alarm per Push-Nachricht.
 
 [![CI](https://github.com/firsttris/Flugwetterdaten/actions/workflows/ci.yml/badge.svg)](https://github.com/firsttris/Flugwetterdaten/actions/workflows/ci.yml)
@@ -23,7 +23,7 @@ Kostenlos, ohne Werbung, als App aufs Handy, mit Wind-Alarm per Push-Nachricht.
 [FAQ](#-faq) •
 [Dokumentation](https://wetter.teufel-it.de/docs/)
 
-<img src="docs/screenshot.png" alt="Wetter NATO-Rampe im dunklen Design: 17 Knoten Wind aus Nord-Ost mit Kompass, Windverlauf der letzten 6 Stunden und Windvorhersage für 3 Tage" width="900">
+<img src="docs/screenshot.png" alt="Wetter NATO-Rampe im dunklen Design: 17 Knoten Wind aus Nord-Ost mit Kompass, Windverlauf der letzten 6 Stunden und Windvorhersage für 5 Tage" width="900">
 
 </div>
 
@@ -34,7 +34,7 @@ Pegel, Wassertemperatur, Hochwasser. Diese App zeigt das alles auf einer Seite, 
 reduziert.
 
 - **Auf einen Blick**: Windstärke, Böen und Richtung groß oben, die beste Windrichtung grün markiert.
-- **Lohnt sich morgen?**: Vorhersage für 3 Tage, Stunde für Stunde, in den gewohnten Windfinder-Farben.
+- **Lohnt sich morgen?**: Vorhersage für 5 Tage, Stunde für Stunde, in den gewohnten Windfinder-Farben.
 - **Nichts verpassen**: Der Wind-Alarm meldet sich, wenn der Wind passt.
 - **Wie eine App**: aufs Handy installierbar, startet ohne Browserleiste, hell und dunkel.
 
@@ -59,7 +59,7 @@ Safari **Teilen → Zum Home-Bildschirm**. Mehr in der
 
 ### 📅 Vorhersage
 
-- **3 Tage, Stunde für Stunde** von 6 bis 21 Uhr, aus dem DWD-Modell ICON.
+- **5 Tage, Stunde für Stunde** von 6 bis 21 Uhr, aus den DWD-Modellen ICON-D2 und ICON-EU.
 - **Windfinder-Farben** für die Windstärke, Böen als Strich, Nord-Ost-Stunden grün.
 - **TAF**: die offizielle Flughafen-Vorhersage, in normale Sprache übersetzt.
 
@@ -90,7 +90,7 @@ Safari **Teilen → Zum Home-Bildschirm**. Mehr in der
   </tr>
 </table>
 
-<img src="docs/screenshot-forecast.png" alt="Vorhersage für 3 Tage: Balken in Windfinder-Farben, Pfeile für die Windrichtung, Nord-Ost grün">
+<img src="docs/screenshot-forecast.png" alt="Vorhersage für 5 Tage: Balken in Windfinder-Farben, Pfeile für die Windrichtung, Nord-Ost grün">
 
 ## 🔀 Alternativen
 
