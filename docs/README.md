@@ -5,12 +5,12 @@
 **Wind, Vorhersage und Rhein-Pegel an der NATO-Rampe Rheinmünster, mit Wind-Alarm aufs Handy.**
 
 Die App zeigt auf einer Seite, ob sich der Weg an den Rhein lohnt: den aktuellen Wind vom
-Baden-Airpark, die Vorhersage für drei Tage, Wassertemperatur, Pegel und Strömung. Auf Wunsch meldet
+Baden-Airpark, die Vorhersage für fünf Tage, Wassertemperatur, Pegel und Strömung. Auf Wunsch meldet
 sie sich von selbst, wenn der Wind passt.
 
 **Zur App: [wetter.teufel-it.de](https://wetter.teufel-it.de)**
 
-<img src="screenshot.png" alt="Die App im dunklen Design: Wind jetzt mit Kompass, Windverlauf der letzten 6 Stunden und Vorhersage für 3 Tage">
+<img src="screenshot.png" alt="Die App im dunklen Design: Wind jetzt mit Kompass, Windverlauf der letzten 6 Stunden und Vorhersage für 5 Tage">
 
 ## Was steht wo?
 

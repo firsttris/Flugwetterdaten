@@ -32,7 +32,7 @@
       "sizes": "1920x1200",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Wind, Vorhersage für 3 Tage und Rhein-Pegel"
+      "label": "Wind, Vorhersage für 5 Tage und Rhein-Pegel"
     }
   ]
 }

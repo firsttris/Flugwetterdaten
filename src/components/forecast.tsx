@@ -20,7 +20,7 @@ export function Forecast({ data, error, unit, now }: { data: ForecastData | null
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Vorhersage 3 Tage</CardTitle>
+        <CardTitle>Vorhersage 5 Tage</CardTitle>
         <CardDescription>
           {FIRST_HOUR}–{LAST_HOUR} Uhr · {UNIT_LONG[unit]}
         </CardDescription>
