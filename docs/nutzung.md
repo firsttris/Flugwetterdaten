@@ -29,8 +29,9 @@ stehen die **Böen** und die **Richtung**, aus der der Wind kommt, in Grad und a
 
 ## Windverlauf letzte 6 Stunden
 
-Mittelwind als Fläche, Böen gestrichelt, darüber kleine Pfeile für die Richtung. Grüne Pfeile
-bedeuten Nord-Ost. So sieht man, ob der Wind gerade zunimmt, nachlässt oder dreht.
+Mittelwind als Fläche, Böen gestrichelt, darüber kleine Pfeile für die Richtung. Sie zeigen wie die
+Kompassnadel, wohin der Wind weht. Grüne Pfeile bedeuten Nord-Ost. So sieht man, ob der Wind
+gerade zunimmt, nachlässt oder dreht.
 
 ## Vorhersage 3 Tage
 
@@ -38,7 +39,7 @@ bedeuten Nord-Ost. So sieht man, ob der Wind gerade zunimmt, nachlässt oder dre
 
 Eine Zeile pro Tag, eine Spalte pro Stunde von 6 bis 21 Uhr:
 
-- **Pfeil** oben: Windrichtung, grün bei Nord-Ost.
+- **Pfeil** oben: Windrichtung, zeigt wohin der Wind weht, grün bei Nord-Ost.
 - **Zahl**: Mittelwind, fett und grün bei Nord-Ost.
 - **Balken**: Mittelwind, eingefärbt nach der Windfinder-Skala (lila wenig Wind, grün um 20 kn,
   gelb und orange darüber). Die Legende steht unter der Vorhersage.

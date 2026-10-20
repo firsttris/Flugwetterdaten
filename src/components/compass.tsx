@@ -155,7 +155,7 @@ export function DirArrow({ dir, className }: { dir: number; className?: string }
   return (
     <svg viewBox="0 0 24 24" className={cn("size-3", className)} aria-hidden="true">
       <path
-        transform={`rotate(${dir + 180} 12 12)`}
+        transform={`rotate(${dir} 12 12)`}
         d="M12 3V21M7 16L12 21L17 16"
         stroke={isGreen(dir) ? "var(--good)" : "var(--muted-foreground)"}
         strokeWidth="2.6"

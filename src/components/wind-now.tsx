@@ -216,7 +216,7 @@ function HistoryChart({ metars, unit, W, animate }: { metars: Metar[]; unit: Win
       <circle className="animate-fade-late" cx={x(last.obsTime)} cy={y(last.wspd)} r="4.5" fill="var(--water)" stroke="var(--card)" strokeWidth="2" />
       {points.map((m, i) =>
         (points.length - 1 - i) % (W < 480 ? 2 : 1) !== 0 ? null : typeof m.wdir === "number" && m.wspd > 0 ? (
-          <g key={m.obsTime} transform={`translate(${x(m.obsTime)} 12) rotate(${m.wdir + 180})`}>
+          <g key={m.obsTime} transform={`translate(${x(m.obsTime)} 12) rotate(${m.wdir})`}>
             <path d="M0 -7L0 7M-4 3L0 7L4 3" stroke={isGreen(m.wdir) ? "var(--good)" : "var(--muted-foreground)"} strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           </g>
         ) : (
