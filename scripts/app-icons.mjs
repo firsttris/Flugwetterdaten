@@ -1,5 +1,5 @@
 // Das App-Icon in allen Größen: public/icon.svg (Favicon) und public/icons/*.png
-// („Zum Startbildschirm“, Manifest, iOS). Nach einer Änderung am Logo neu ausführen:
+// („Zum Startbildschirm“, Manifest, iOS, Badge der Push-Mitteilung). Nach einer Änderung am Logo neu ausführen:
 //   node scripts/app-icons.mjs        (CHROMIUM_PATH=/pfad/zu/chromium, falls nötig)
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { chromium } from '@playwright/test'
@@ -25,6 +25,12 @@ const icon = (round, inset) => {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${-o} ${-o} ${s} ${s}"><defs>${DEFS}</defs><rect x="${-o}" y="${-o}" width="${s}" height="${s}" rx="${round * s}" fill="url(#g)"/>${MARK}</svg>`
 }
 
+/** Badge für Android-Mitteilungen: nur die Form zählt, Android färbt sie einfarbig ein. */
+const BADGE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20">${MARK
+  .replace('stroke-opacity=".22" stroke-width="1.1"', 'stroke-width="1.4"')
+  .replace('stroke="#4ade80" stroke-width="2.1"', 'stroke="#fff" stroke-width="2.4"')
+  .replace('stroke-width="1.9"', 'stroke-width="2.2"')}</svg>`
+
 const ICONS = [
   { file: 'icon-192.png', size: 192, svg: icon(0.24, 0.92) },
   { file: 'icon-512.png', size: 512, svg: icon(0.24, 0.92) },
@@ -32,6 +38,7 @@ const ICONS = [
   { file: 'icon-maskable-512.png', size: 512, svg: icon(0, 0.72) },
   // iOS rundet selbst und zeigt Transparenz schwarz
   { file: 'apple-touch-icon.png', size: 180, svg: icon(0, 0.86) },
+  { file: 'badge-96.png', size: 96, svg: BADGE },
 ]
 
 mkdirSync('public/icons', { recursive: true })
