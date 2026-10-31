@@ -1,17 +1,16 @@
 // Renovate (GitHub App, https://github.com/apps/renovate): a pull request for each new release of
-// what Flugwetterdaten builds on, plus the "Dependency Dashboard" issue listing what is open.
-// Only those: the Cloudflare Workers toolchain of the worker (wrangler, @cloudflare/workers-types
-// and compatibility_date in worker/wrangler.toml, which compat-date.yml sets to the workerd that
-// comes with wrangler) and the Node of CI and the docs. The other npm packages and the actions are
-// not tracked here; the weather APIs (Open-Meteo v1, aviationweather.gov, PEGELONLINE v2) have no
-// releases to follow. Check with `npx --package renovate renovate-config-validator .github/renovate.json5`.
+// what Flugwetterdaten builds on, plus the "Dependency Dashboard" issue listing what is open. Their
+// own pull requests: the Cloudflare Workers toolchain of the worker (wrangler,
+// @cloudflare/workers-types and compatibility_date in worker/wrangler.toml, which compat-date.yml
+// sets to the workerd that comes with wrangler) and the Node of CI and the docs. The weather APIs
+// (Open-Meteo v1, aviationweather.gov, PEGELONLINE v2) have no releases to follow.
+// Everything else (the other packages, the actions, the images) comes with the shared settings of
+// firsttris/workflows (renovate/default.json5): minor and patch updates once a month in one pull
+// request that merges itself when CI is green, majors on request in the dashboard.
+// Check with `npx --package renovate renovate-config-validator .github/renovate.json5`.
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["config:recommended"],
-  enabledManagers: ["npm", "custom.regex"],
-  timezone: "Europe/Berlin",
-  labels: ["dependencies"],
-  automerge: false,
+  extends: ["github>firsttris/workflows//renovate/default.json5"],
   customManagers: [
     {
       // The Node of the workflows and the one README and docs/entwicklung.md ask for
@@ -32,11 +31,6 @@
   ],
   packageRules: [
     {
-      // From npm only the worker's toolchain (below)
-      matchManagers: ["npm"],
-      enabled: false,
-    },
-    {
       // wrangler and the types in one PR: wrangler 4 asks for the workers-types of its workerd
       // (peerDependency). workers-types comes out daily, so once a month is enough.
       matchManagers: ["npm"],
@@ -51,11 +45,16 @@
       prBodyNotes: [
         "`compat-date.yml` sets `compatibility_date` in `worker/wrangler.toml` to the date of the workerd this wrangler brings and starts CI on that commit. Before merging: read the [compatibility flags](https://developers.cloudflare.com/workers/configuration/compatibility-flags/) that take effect between the old and the new date and the wrangler changelog; `(cd worker && npm run typecheck)` must stay green, and `npx wrangler dev` with a scheduled run (`curl 'http://localhost:8787/__scheduled'`) still has to fetch METAR/TAF and send the wind alarm. Merging deploys the worker (`deploy-worker.yml`).",
       ],
+      automerge: false,
+      dependencyDashboardApproval: false,
     },
     {
       matchPackageNames: ["node"],
       groupName: "Node",
       sourceUrl: "https://github.com/nodejs/node",
+      schedule: ["at any time"],
+      automerge: false,
+      dependencyDashboardApproval: false,
     },
   ],
 }
