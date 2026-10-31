@@ -2,7 +2,7 @@
 # damit die URL (silent-night-c341.<konto>.workers.dev) gleich bleibt.
 name = "silent-night-c341"
 main = "src/index.ts"
-compatibility_date = "2025-06-01"
+compatibility_date = "2025-06-17"
 
 # Alle 30 Minuten neuen METAR prüfen und ggf. Wind-Alarm schicken
 [triggers]
