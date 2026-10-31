@@ -8,7 +8,11 @@ wenigen Minuten online.
 | `ci.yml` | jeder Pull Request und Push auf `main` | baut die App, prüft den Worker, baut die Doku mit `--strict` |
 | `deploy.yml` | Push auf `main` | baut App und Doku (`dist/` und `dist/docs/`) und veröffentlicht beides auf GitHub Pages |
 | `deploy-worker.yml` | Push auf `main` mit Änderungen in `worker/` | Typecheck und `wrangler deploy`, setzt den privaten VAPID-Schlüssel |
+| `compat-date.yml` | Push auf einen Branch `renovate/**`, der `worker/package-lock.json` ändert | setzt `compatibility_date` in `worker/wrangler.toml` auf das Datum des workerd, das mit wrangler kommt, und startet die CI |
 | `screenshots.yml` | von Hand | nimmt alle Bilder neu auf und committet die geänderten |
+
+Neue Versionen von wrangler, `@cloudflare/workers-types` und Node schlägt Renovate als Pull Request vor
+(`.github/renovate.json5`), wrangler einmal im Monat.
 
 ## GitHub Pages
 

@@ -1,0 +1,61 @@
+// Renovate (GitHub App, https://github.com/apps/renovate): a pull request for each new release of
+// what Flugwetterdaten builds on, plus the "Dependency Dashboard" issue listing what is open.
+// Only those: the Cloudflare Workers toolchain of the worker (wrangler, @cloudflare/workers-types
+// and compatibility_date in worker/wrangler.toml, which compat-date.yml sets to the workerd that
+// comes with wrangler) and the Node of CI and the docs. The other npm packages and the actions are
+// not tracked here; the weather APIs (Open-Meteo v1, aviationweather.gov, PEGELONLINE v2) have no
+// releases to follow. Check with `npx --package renovate renovate-config-validator .github/renovate.json5`.
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:recommended"],
+  enabledManagers: ["npm", "custom.regex"],
+  timezone: "Europe/Berlin",
+  labels: ["dependencies"],
+  automerge: false,
+  customManagers: [
+    {
+      // The Node of the workflows and the one README and docs/entwicklung.md ask for
+      customType: "regex",
+      managerFilePatterns: [
+        "/^\\.github/workflows/[^/]+\\.ya?ml$/",
+        "/^README\\.md$/",
+        "/^docs/entwicklung\\.md$/",
+      ],
+      matchStrings: [
+        "node-version: (?<currentValue>\\d+)\\n",
+        "Voraussetzung: Node\\.js (?<currentValue>\\d+)\\.",
+      ],
+      depNameTemplate: "node",
+      datasourceTemplate: "node-version",
+      versioningTemplate: "node",
+    },
+  ],
+  packageRules: [
+    {
+      // From npm only the worker's toolchain (below)
+      matchManagers: ["npm"],
+      enabled: false,
+    },
+    {
+      // wrangler and the types in one PR: wrangler 4 asks for the workers-types of its workerd
+      // (peerDependency). workers-types comes out daily, so once a month is enough.
+      matchManagers: ["npm"],
+      matchFileNames: ["worker/package.json"],
+      matchPackageNames: ["wrangler", "@cloudflare/workers-types"],
+      enabled: true,
+      groupName: "Cloudflare Workers",
+      // One PR even when workers-types changes its major (4.x to 5.x with wrangler 4.156)
+      separateMajorMinor: false,
+      schedule: ["* 0-5 1 * *"],
+      sourceUrl: "https://github.com/cloudflare/workers-sdk",
+      prBodyNotes: [
+        "`compat-date.yml` sets `compatibility_date` in `worker/wrangler.toml` to the date of the workerd this wrangler brings and starts CI on that commit. Before merging: read the [compatibility flags](https://developers.cloudflare.com/workers/configuration/compatibility-flags/) that take effect between the old and the new date and the wrangler changelog; `(cd worker && npm run typecheck)` must stay green, and `npx wrangler dev` with a scheduled run (`curl 'http://localhost:8787/__scheduled'`) still has to fetch METAR/TAF and send the wind alarm. Merging deploys the worker (`deploy-worker.yml`).",
+      ],
+    },
+    {
+      matchPackageNames: ["node"],
+      groupName: "Node",
+      sourceUrl: "https://github.com/nodejs/node",
+    },
+  ],
+}
