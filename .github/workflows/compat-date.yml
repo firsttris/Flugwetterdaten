@@ -1,0 +1,50 @@
+name: Compatibility date
+
+# Auf einem Renovate-Branch, der wrangler anhebt (.github/renovate.json5): Renovate ändert nur
+# worker/package.json und die Lockfile. Dieser Workflow setzt compatibility_date in
+# worker/wrangler.toml auf das Datum des workerd, das mit diesem wrangler kommt (workerd
+# 1.JJJJMMTT.N, das neueste Datum, das er kennt), committet es und startet die CI auf dem neuen
+# Commit. Ein Commit mit dem Token des Workflows startet selbst keinen Workflow, daher der
+# ausdrückliche CI-Lauf.
+on:
+  push:
+    branches: ["renovate/**"]
+    paths: ["worker/package-lock.json"]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: compat-date-${{ github.ref }}
+
+jobs:
+  date:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: compatibility_date auf den workerd von wrangler setzen
+        run: |
+          set -euo pipefail
+          workerd=$(jq -r '.packages["node_modules/workerd"].version' worker/package-lock.json)
+          if ! [[ $workerd =~ ^1\.([0-9]{4})([0-9]{2})([0-9]{2})\.[0-9]+$ ]]; then
+            echo "::error::unerwartete workerd-Version '$workerd' in worker/package-lock.json"
+            exit 1
+          fi
+          date="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}-${BASH_REMATCH[3]}"
+          echo "workerd $workerd: compatibility_date $date"
+          sed -i -E "s/^compatibility_date = \"[0-9-]+\"/compatibility_date = \"$date\"/" worker/wrangler.toml
+      - name: Committen und CI starten
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "compatibility_date stimmt schon"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Worker: compatibility_date auf den workerd von wrangler"
+          git push
+          gh workflow run ci.yml --ref "$GITHUB_REF_NAME"
