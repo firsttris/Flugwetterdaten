@@ -1,6 +1,6 @@
 # Entwicklung
 
-Voraussetzung: Node.js 22. Für die Doku zusätzlich Python 3.
+Voraussetzung: Node.js 26. Für die Doku zusätzlich Python 3.
 
 ```bash
 git clone https://github.com/firsttris/Flugwetterdaten && cd Flugwetterdaten

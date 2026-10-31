@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0 # das Datum „Zuletzt geändert“ der Doku braucht den Verlauf
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
           cache: npm
       - uses: actions/setup-python@v5
         with:

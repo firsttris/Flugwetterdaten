@@ -133,7 +133,7 @@ Die vollständige Dokumentation mit Suche: **[wetter.teufel-it.de/docs](https://
 
 ## 🛠️ Entwicklung
 
-Voraussetzung: Node.js 22.
+Voraussetzung: Node.js 26.
 
 ```bash
 git clone https://github.com/firsttris/Flugwetterdaten && cd Flugwetterdaten
