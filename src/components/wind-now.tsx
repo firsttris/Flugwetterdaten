@@ -203,10 +203,11 @@ function HistoryChart({ metars, unit, W, animate }: { metars: Metar[]; unit: Win
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} className="block h-auto w-full" role="img" aria-label="Windverlauf der letzten Stunden">
+      {/* textAnchor und fontSize in style, nicht als Attribut: siehe Kommentar in compass.tsx */}
       {ticks.map((v) => (
         <g key={v}>
           <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} stroke="var(--border)" />
-          <text x={L - 8} y={y(v) + 4} textAnchor="end" fontSize="11" fill="var(--muted-foreground)">{convertWind(v, unit)}</text>
+          <text x={L - 8} y={y(v) + 4} style={{ textAnchor: "end", fontSize: 11 }} fill="var(--muted-foreground)">{convertWind(v, unit)}</text>
         </g>
       ))}
       <path className="animate-fade-late" d={`${line}L${x(last.obsTime)} ${y(0)}L${x(start)} ${y(0)}Z`} fill="var(--water-soft)" />
@@ -220,11 +221,11 @@ function HistoryChart({ metars, unit, W, animate }: { metars: Metar[]; unit: Win
             <path d="M0 -7L0 7M-4 3L0 7L4 3" stroke={isGreen(m.wdir) ? "var(--good)" : "var(--muted-foreground)"} strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           </g>
         ) : (
-          <text key={m.obsTime} x={x(m.obsTime)} y="16" textAnchor="middle" fontSize="10" fill="var(--muted-foreground)">·</text>
+          <text key={m.obsTime} x={x(m.obsTime)} y="16" style={{ textAnchor: "middle", fontSize: 10 }} fill="var(--muted-foreground)">·</text>
         ),
       )}
       {hours.map((t) => (
-        <text key={t} x={x(t)} y={H - 6} textAnchor="middle" fontSize="11" fill="var(--muted-foreground)">
+        <text key={t} x={x(t)} y={H - 6} style={{ textAnchor: "middle", fontSize: 11 }} fill="var(--muted-foreground)">
           {formatTime(new Date(t * 1000))}
         </text>
       ))}

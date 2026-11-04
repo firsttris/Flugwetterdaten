@@ -33,7 +33,7 @@ flowchart LR
 
 | Bereich | Umsetzung |
 |---|---|
-| Technik | Vite, React 19, TypeScript, Tailwind CSS 4, Komponenten im Stil von shadcn/ui auf Radix |
+| Technik | Vite, React 19 (im Build durch TanStack Redact ersetzt, gleiche API), TypeScript, Tailwind CSS 4, Komponenten im Stil von shadcn/ui auf Radix |
 | Daten | direkt aus dem Browser von Open-Meteo, Pegelonline und LUBW (die erlauben das per CORS); METAR und TAF über den Worker, weil aviationweather.gov keinen Abruf aus dem Browser erlaubt |
 | Aktualisierung | `usePolling` lädt jede Quelle in ihrem Takt neu und beim Zurückkehren in die App |
 | Einstellungen | im `localStorage` unter `rm-settings` |

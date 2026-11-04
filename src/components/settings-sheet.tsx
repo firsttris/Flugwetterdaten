@@ -99,8 +99,8 @@ export function SettingsSheet({
                     min={MIN_WIND}
                     max={MAX_WIND}
                     step={1}
-                    value={[settings.minWind]}
-                    onValueChange={([v]) => update({ minWind: v })}
+                    value={settings.minWind}
+                    onValueChange={(minWind) => update({ minWind })}
                   />
                   <div className="mt-1.5 flex justify-between text-[11px] text-muted-foreground">
                     <span>{convertWind(MIN_WIND, settings.unit)} {u}</span>

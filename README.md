@@ -141,8 +141,8 @@ bun install
 bun run dev
 ```
 
-Vite, React, TypeScript, Tailwind CSS und shadcn/ui; ein Cloudflare Worker für METAR/TAF und den
-Wind-Alarm. Details: [Entwicklung](https://wetter.teufel-it.de/docs/entwicklung.html).
+Vite, React (im Build TanStack Redact), TypeScript, Tailwind CSS und shadcn/ui; ein Cloudflare
+Worker für METAR/TAF und den Wind-Alarm. Details: [Entwicklung](https://wetter.teufel-it.de/docs/entwicklung.html).
 
 ## 🤝 Mitmachen
 
