@@ -2,33 +2,15 @@
 // what Flugwetterdaten builds on, plus the "Dependency Dashboard" issue listing what is open. Their
 // own pull requests: the Cloudflare Workers toolchain of the worker (wrangler,
 // @cloudflare/workers-types and compatibility_date in worker/wrangler.toml, which compat-date.yml
-// sets to the workerd that comes with wrangler) and the Node of CI and the docs. The weather APIs
+// sets to the workerd that comes with wrangler) and Bun (packageManager, the Bun of CI). The weather APIs
 // (Open-Meteo v1, aviationweather.gov, PEGELONLINE v2) have no releases to follow.
 // Everything else (the other packages, the actions, the images) comes with the shared settings of
 // firsttris/workflows (renovate/default.json5): minor and patch updates once a month in one pull
 // request that merges itself when CI is green, majors on request in the dashboard.
-// Check with `npx --package renovate renovate-config-validator .github/renovate.json5`.
+// Check with `bunx --package renovate renovate-config-validator .github/renovate.json5`.
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["github>firsttris/workflows//renovate/default.json5"],
-  customManagers: [
-    {
-      // The Node of the workflows and the one README and docs/entwicklung.md ask for
-      customType: "regex",
-      managerFilePatterns: [
-        "/^\\.github/workflows/[^/]+\\.ya?ml$/",
-        "/^README\\.md$/",
-        "/^docs/entwicklung\\.md$/",
-      ],
-      matchStrings: [
-        "node-version: (?<currentValue>\\d+)\\n",
-        "Voraussetzung: Node\\.js (?<currentValue>\\d+)\\.",
-      ],
-      depNameTemplate: "node",
-      datasourceTemplate: "node-version",
-      versioningTemplate: "node",
-    },
-  ],
   packageRules: [
     {
       // wrangler and the types in one PR: wrangler 4 asks for the workers-types of its workerd
@@ -43,15 +25,20 @@
       schedule: ["* 0-5 1 * *"],
       sourceUrl: "https://github.com/cloudflare/workers-sdk",
       prBodyNotes: [
-        "`compat-date.yml` sets `compatibility_date` in `worker/wrangler.toml` to the date of the workerd this wrangler brings and starts CI on that commit. Before merging: read the [compatibility flags](https://developers.cloudflare.com/workers/configuration/compatibility-flags/) that take effect between the old and the new date and the wrangler changelog; `(cd worker && npm run typecheck)` must stay green, and `npx wrangler dev` with a scheduled run (`curl 'http://localhost:8787/__scheduled'`) still has to fetch METAR/TAF and send the wind alarm. Merging deploys the worker (`deploy-worker.yml`).",
+        "`compat-date.yml` sets `compatibility_date` in `worker/wrangler.toml` to the date of the workerd this wrangler brings and starts CI on that commit. Before merging: read the [compatibility flags](https://developers.cloudflare.com/workers/configuration/compatibility-flags/) that take effect between the old and the new date and the wrangler changelog; `(cd worker && bun run typecheck)` must stay green, and `bunx wrangler dev` with a scheduled run (`curl 'http://localhost:8787/__scheduled'`) still has to fetch METAR/TAF and send the wind alarm. Merging deploys the worker (`deploy-worker.yml`).",
       ],
       automerge: false,
       dependencyDashboardApproval: false,
     },
     {
-      matchPackageNames: ["node"],
-      groupName: "Node",
-      sourceUrl: "https://github.com/nodejs/node",
+      // Bun: packageManager in package.json, which Renovate's npm manager reads as the dependency
+      // `bun`
+      matchPackageNames: ["bun", "oven/bun", "docker.io/oven/bun"],
+      groupName: "Bun",
+      sourceUrl: "https://github.com/oven-sh/bun",
+      prBodyNotes: [
+        "`packageManager` in the root package.json is the Bun of every workflow (`bun-version-file` of setup-bun in ci.yml, deploy.yml and deploy-worker.yml, and `npm install --global bun@…` in the Playwright image of screenshots.yml). Bun installs the packages of the app and of the worker (`bun.lock`, `worker/bun.lock`), runs the scripts and Vite (`bun --bun vite build`), so it builds what deploy.yml publishes: read the release notes for `bun install` and `bun run`, and run `bun install` locally if a lockfile changes.",
+      ],
       schedule: ["at any time"],
       automerge: false,
       dependencyDashboardApproval: false,

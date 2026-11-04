@@ -24,18 +24,17 @@ jobs:
       VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      # Das Bun aus packageManager in package.json (im Wurzelverzeichnis, nicht in worker/)
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 26
-          cache: npm
-          cache-dependency-path: worker/package-lock.json
-      - run: npm ci
-      - run: npm run typecheck
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
 
       - name: Worker hochladen
-        run: npx wrangler deploy
+        run: bunx wrangler deploy
 
       # Privater VAPID-Schlüssel für den Wind-Alarm, nur wenn das Secret gesetzt ist
       - name: VAPID-Schlüssel setzen
         if: env.VAPID_PRIVATE_KEY != ''
-        run: printf '%s' "$VAPID_PRIVATE_KEY" | npx wrangler secret put VAPID_PRIVATE_KEY
+        run: printf '%s' "$VAPID_PRIVATE_KEY" | bunx wrangler secret put VAPID_PRIVATE_KEY

@@ -22,8 +22,8 @@ Im selben Pull Request anpassen, was die Änderung betrifft, und nur das:
 Grün vor jedem Push, danach die CI prüfen:
 
 ```sh
-npm run build                        # Typecheck und Build der App
-(cd worker && npm run typecheck)     # Worker
+bun run build                        # Typecheck und Build der App
+(cd worker && bun run typecheck)     # Worker
 mkdocs build --strict                # wenn docs/ oder mkdocs.yml geändert wurden
 ```
 
@@ -43,7 +43,7 @@ mkdocs build --strict                # wenn docs/ oder mkdocs.yml geändert wurd
 
 ## Code-Stil
 
-Technikwahl nach `tech-stack.md` in firsttris/workflows. Abweichungen: npm statt pnpm, kein Biome
+Technikwahl nach `tech-stack.md` in firsttris/workflows. Abweichungen: kein Biome
 (noch nicht eingerichtet), eigene SVG-Diagramme statt uPlot, weil es nur wenige Dutzend Punkte sind.
 
 Funktional, nicht objektorientiert: reine Funktionen, Seiteneffekte am Rand, Funktionskomponenten und

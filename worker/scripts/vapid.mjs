@@ -6,4 +6,4 @@ const raw = Buffer.from(await crypto.subtle.exportKey("raw", keys.publicKey)).to
 const jwk = await crypto.subtle.exportKey("jwk", keys.privateKey);
 
 console.log("VAPID_PUBLIC_KEY (in wrangler.toml eintragen):\n" + raw + "\n");
-console.log("VAPID_PRIVATE_KEY (mit `npx wrangler secret put VAPID_PRIVATE_KEY` speichern):\n" + JSON.stringify(jwk));
+console.log("VAPID_PRIVATE_KEY (mit `bunx wrangler secret put VAPID_PRIVATE_KEY` speichern):\n" + JSON.stringify(jwk));

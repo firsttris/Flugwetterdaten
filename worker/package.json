@@ -6,7 +6,7 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "typecheck": "tsc --noEmit",
-    "vapid": "node scripts/vapid.mjs"
+    "vapid": "bun scripts/vapid.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261030.1",
