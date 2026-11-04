@@ -39,21 +39,23 @@ export function Compass({ dir, spread, className }: { dir?: number | null; sprea
       role="img"
       aria-label={typeof dir === "number" ? `Wind aus ${Math.round(dir)} Grad` : dir === null ? "Wind aus wechselnden Richtungen" : "Windkompass"}
     >
+      {/* SVG-Eigenschaften wie stopColor, textAnchor und fontSize stehen in style: TanStack Redact 0.3.1
+          setzt camelCase-Attribute außer clip*, fill*, stroke* unverändert ins DOM, wo sie nicht wirken */}
       <defs>
         <radialGradient id={`${id}face`} cx="50%" cy="40%" r="65%">
-          <stop offset="0" stopColor="var(--card)" />
-          <stop offset="1" stopColor="var(--muted)" />
+          <stop offset="0" style={{ stopColor: "var(--card)" }} />
+          <stop offset="1" style={{ stopColor: "var(--muted)" }} />
         </radialGradient>
         <linearGradient id={`${id}sec`} gradientUnits="userSpaceOnUse" x1={s0} y1={s1} x2={e0} y2={e1}>
-          <stop offset="0" stopColor="var(--good)" stopOpacity=".55" />
-          <stop offset=".5" stopColor="var(--good)" />
-          <stop offset="1" stopColor="var(--good)" stopOpacity=".55" />
+          <stop offset="0" style={{ stopColor: "var(--good)", stopOpacity: 0.55 }} />
+          <stop offset=".5" style={{ stopColor: "var(--good)" }} />
+          <stop offset="1" style={{ stopColor: "var(--good)", stopOpacity: 0.55 }} />
         </linearGradient>
         <filter id={`${id}glow`} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="4" />
         </filter>
         <filter id={`${id}shadow`} x="-50%" y="-50%" width="200%" height="200%">
-          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodOpacity=".25" />
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" style={{ floodOpacity: 0.25 }} />
         </filter>
       </defs>
 
@@ -80,7 +82,7 @@ export function Compass({ dir, spread, className }: { dir?: number | null; sprea
       {([["N", 0], ["O", 90], ["S", 180], ["W", 270]] as const).map(([t, a]) => {
         const [x, y] = point(56, a);
         return (
-          <text key={t} x={x} y={y + 4.5} textAnchor="middle" fontSize="13" fontWeight="600" fill="var(--muted-foreground)">
+          <text key={t} x={x} y={y + 4.5} style={{ textAnchor: "middle", fontSize: 13, fontWeight: 600 }} fill="var(--muted-foreground)">
             {t}
           </text>
         );
@@ -95,7 +97,7 @@ export function Compass({ dir, spread, className }: { dir?: number | null; sprea
         />
       )}
 
-      <text x={C} y={C + 26} textAnchor="middle" fontSize="13" fontWeight="500" fill="var(--muted-foreground)" opacity={dir === null ? 1 : 0} className="transition-opacity duration-300">
+      <text x={C} y={C + 26} style={{ textAnchor: "middle", fontSize: 13, fontWeight: 500 }} fill="var(--muted-foreground)" opacity={dir === null ? 1 : 0} className="transition-opacity duration-300">
         VRB
       </text>
 
