@@ -1,7 +1,7 @@
 // Nimmt die Bilder für README, Dokumentation, App-Manifest und Social Preview auf, mit den
 // festen Demo-Daten aus scripts/demo-data.mjs. Erwartet die gebaute App unter BASE:
-//   npm run screenshots   (scripts/screenshots.sh baut, startet die Vorschau und ruft dieses Skript)
-//   CHROMIUM_PATH=/pfad/zu/chromium node scripts/screenshots.mjs
+//   bun run screenshots   (scripts/screenshots.sh baut, startet die Vorschau und ruft dieses Skript)
+//   CHROMIUM_PATH=/pfad/zu/chromium bun scripts/screenshots.mjs
 import { mkdirSync, readFileSync } from 'node:fs'
 import { chromium } from '@playwright/test'
 import { NOW, respond } from './demo-data.mjs'

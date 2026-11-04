@@ -9,13 +9,13 @@ compatibility_date = "2026-10-23"
 crons = ["*/30 * * * *"]
 
 # Speicher für die angemeldeten Geräte des Wind-Alarms
-# (angelegt mit: npx wrangler kv namespace create SUBSCRIPTIONS)
+# (angelegt mit: bunx wrangler kv namespace create SUBSCRIPTIONS)
 [[kv_namespaces]]
 binding = "SUBSCRIPTIONS"
 id = "152d988578a54878aac286c24f62e29c"
 
 [vars]
 VAPID_SUBJECT = "https://wetter.teufel-it.de"
-# Öffentlicher VAPID-Schlüssel (npm run vapid). Der private Schlüssel ist ein Secret:
-#   npx wrangler secret put VAPID_PRIVATE_KEY
+# Öffentlicher VAPID-Schlüssel (bun run vapid). Der private Schlüssel ist ein Secret:
+#   bunx wrangler secret put VAPID_PRIVATE_KEY
 VAPID_PUBLIC_KEY = "BCkqxzbX4ccXmasdQvajEETbcfs59tucanAZMJ0Xsuiz0JUVuaD71wiLXOG0kDqrBZeHsQq6LKbvLNxNLQguWBc"

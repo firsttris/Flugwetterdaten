@@ -1,6 +1,6 @@
 // Das App-Icon in allen Größen: public/icon.svg (Favicon) und public/icons/*.png
 // („Zum Startbildschirm“, Manifest, iOS, Badge der Push-Mitteilung). Nach einer Änderung am Logo neu ausführen:
-//   node scripts/app-icons.mjs        (CHROMIUM_PATH=/pfad/zu/chromium, falls nötig)
+//   bun scripts/app-icons.mjs         (CHROMIUM_PATH=/pfad/zu/chromium, falls nötig)
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { chromium } from '@playwright/test'
 

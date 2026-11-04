@@ -1,18 +1,19 @@
 # Entwicklung
 
-Voraussetzung: Node.js 26. Für die Doku zusätzlich Python 3.
+Voraussetzung: [Bun](https://bun.sh) in der Version aus `packageManager` in `package.json`. Für die
+Doku zusätzlich Python 3.
 
 ```bash
 git clone https://github.com/firsttris/Flugwetterdaten && cd Flugwetterdaten
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 Die Seite spricht standardmäßig den produktiven Worker an. Für einen lokalen Worker:
 
 ```bash
-cd worker && npm install && npm run dev      # http://localhost:8787
-VITE_API_BASE=http://localhost:8787 npm run dev
+cd worker && bun install && bun run dev      # http://localhost:8787
+VITE_API_BASE=http://localhost:8787 bun run dev
 ```
 
 ## Projektstruktur
@@ -31,8 +32,8 @@ scripts/             Icons, Screenshots, Demo-Daten, Social Preview
 Vor jedem Push:
 
 ```bash
-npm run build                                 # Typecheck und Build der App
-(cd worker && npm run typecheck)              # Worker
+bun run build                                 # Typecheck und Build der App
+(cd worker && bun run typecheck)              # Worker
 mkdocs build --strict                         # Doku, wenn docs/ oder mkdocs.yml geändert wurden
 ```
 
@@ -47,8 +48,8 @@ mkdocs serve                                  # http://127.0.0.1:8000
 
 | Befehl | Was |
 |---|---|
-| `npm run icons` | erzeugt `public/icon.svg` und `public/icons/*.png` aus `scripts/app-icons.mjs` |
-| `npm run screenshots` | baut die App, startet die Vorschau und nimmt mit `scripts/demo-data.mjs` alle Bilder in `docs/` und `public/screenshots/` auf |
+| `bun run icons` | erzeugt `public/icon.svg` und `public/icons/*.png` aus `scripts/app-icons.mjs` |
+| `bun run screenshots` | baut die App, startet die Vorschau und nimmt mit `scripts/demo-data.mjs` alle Bilder in `docs/` und `public/screenshots/` auf |
 
 Beide brauchen Chromium von Playwright; wo es nicht automatisch gefunden wird, den Pfad mit
 `CHROMIUM_PATH` angeben. Die Screenshots laufen mit fester Uhrzeit, festen Daten und ruhenden

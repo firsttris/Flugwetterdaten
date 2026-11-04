@@ -133,12 +133,12 @@ Die vollständige Dokumentation mit Suche: **[wetter.teufel-it.de/docs](https://
 
 ## 🛠️ Entwicklung
 
-Voraussetzung: Node.js 26.
+Voraussetzung: [Bun](https://bun.sh) (die Version aus `packageManager` in `package.json`).
 
 ```bash
 git clone https://github.com/firsttris/Flugwetterdaten && cd Flugwetterdaten
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 Vite, React, TypeScript, Tailwind CSS und shadcn/ui; ein Cloudflare Worker für METAR/TAF und den
@@ -147,7 +147,7 @@ Wind-Alarm. Details: [Entwicklung](https://wetter.teufel-it.de/docs/entwicklung.
 ## 🤝 Mitmachen
 
 Issues und Pull Requests sind willkommen. Bei einem Fehler hilft: Gerät, Browser, Uhrzeit und ein
-Screenshot. Vor einem Pull Request bitte `npm run build` und `mkdocs build --strict` laufen lassen.
+Screenshot. Vor einem Pull Request bitte `bun run build` und `mkdocs build --strict` laufen lassen.
 
 ---
 

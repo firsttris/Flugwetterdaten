@@ -8,10 +8,10 @@ wenigen Minuten online.
 | `ci.yml` | jeder Pull Request und Push auf `main` | baut die App, prüft den Worker, baut die Doku mit `--strict` |
 | `deploy.yml` | Push auf `main` | baut App und Doku (`dist/` und `dist/docs/`) und veröffentlicht beides auf GitHub Pages |
 | `deploy-worker.yml` | Push auf `main` mit Änderungen in `worker/` | Typecheck und `wrangler deploy`, setzt den privaten VAPID-Schlüssel |
-| `compat-date.yml` | Push auf einen Branch `renovate/**`, der `worker/package-lock.json` ändert | setzt `compatibility_date` in `worker/wrangler.toml` auf das Datum des workerd, das mit wrangler kommt, und startet die CI |
+| `compat-date.yml` | Push auf einen Branch `renovate/**`, der `worker/bun.lock` ändert | setzt `compatibility_date` in `worker/wrangler.toml` auf das Datum des workerd, das mit wrangler kommt, und startet die CI |
 | `screenshots.yml` | von Hand | nimmt alle Bilder neu auf und committet die geänderten |
 
-Neue Versionen von wrangler, `@cloudflare/workers-types` und Node schlägt Renovate als Pull Request vor
+Neue Versionen von wrangler, `@cloudflare/workers-types` und Bun schlägt Renovate als Pull Request vor
 (`.github/renovate.json5`), wrangler einmal im Monat.
 
 ## GitHub Pages
@@ -37,9 +37,9 @@ Einmalig einzurichten, danach aktualisiert die CI den Worker selbst:
     | `CLOUDFLARE_ACCOUNT_ID` | Konto-ID aus dem Cloudflare-Dashboard |
     | `VAPID_PRIVATE_KEY` | privater VAPID-Schlüssel (JSON) für den Wind-Alarm |
 
-3. **KV-Speicher** `SUBSCRIPTIONS` (`npx wrangler kv namespace create SUBSCRIPTIONS`), die ID steht in
+3. **KV-Speicher** `SUBSCRIPTIONS` (`bunx wrangler kv namespace create SUBSCRIPTIONS`), die ID steht in
    `worker/wrangler.toml`.
-4. **VAPID-Schlüssel** mit `npm run vapid`: den öffentlichen in `worker/wrangler.toml` bei
+4. **VAPID-Schlüssel** mit `bun run vapid`: den öffentlichen in `worker/wrangler.toml` bei
    `VAPID_PUBLIC_KEY`, den privaten als Secret `VAPID_PRIVATE_KEY`. Beide müssen aus demselben Lauf
    stammen.
 
